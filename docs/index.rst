@@ -81,7 +81,7 @@ To get started using pyxem, especially if you are unfamiliar with python, we rec
 Documentation
 -------------
 
-`Documentation <http://pyxem.github.io/pyxem/pyxem>`__ is available for all pyxem modules at the following links:
+`Documentation <http://pyxem.github.io/pyxem/pyxem>`__ was formerly available for all pyxem modules at the following links:
 
 - `pyxem.signals <http://pyxem.github.io/pyxem/pyxem.signals>`__ - for manipulating raw data and analysis results.
 
