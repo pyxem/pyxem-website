@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.signals package &#8212; pyxem 0.8.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pyxem-signals-package">
+<h1>pyxem.signals package<a class="headerlink" href="#pyxem-signals-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyxem.signals.crystallographic_map">
+<span id="pyxem-signals-crystallographic-map-module"></span><h2>pyxem.signals.crystallographic_map module<a class="headerlink" href="#module-pyxem.signals.crystallographic_map" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap">
+<em class="property">class </em><code class="descclassname">pyxem.signals.crystallographic_map.</code><code class="descname">CrystallographicMap</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></p>
+<p>Crystallographic mapping results containing the best matching crystal
+phase and orientation at each navigation position with associated metrics.</p>
+<p>The Signal at each navigation position is an array of,</p>
+<blockquote>
+<div><p>[phase, np.array((z,x,z)), dict(metrics)]</p>
+</div></blockquote>
+<p>which defines the phase, orientation as Euler angles in the zxz convention
+and metrics associated with the indexation / matching.</p>
+<p>Metrics depend on the method used (template matching vs. vector matching) to
+obtain the crystallographic map.</p>
+<blockquote>
+<div><p>‘correlation’
+‘match_rate’
+‘total_error’
+‘orientation_reliability’
+‘phase_reliability’</p>
+</div></blockquote>
+<dl class="simple">
+<dt>method<span class="classifier">string</span></dt><dd><p>Method used to obtain crystallographic mapping results, may be
+‘template_matching’ or ‘vector_matching’.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.get_distance_from_modal_angle">
+<code class="descname">get_distance_from_modal_angle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.get_distance_from_modal_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the misorinetation with respect to the modal angle for the
+scan region, at each navigation position.</p>
+<p>NB: This view of the data is typically only useful when the orientation
+spread across the navigation axes is small.</p>
+<dl class="simple">
+<dt>mode_distance_map<span class="classifier">list</span></dt><dd><p>Misorientation with respect to the modal angle at each navigtion
+position.</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>method: save_mtex_map</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.get_metric_map">
+<code class="descname">get_metric_map</code><span class="sig-paren">(</span><em>metric</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.get_metric_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a map of an indexation / matching metric at each navigation
+position.</p>
+<dl class="simple">
+<dt>metric<span class="classifier">string</span></dt><dd><p>String identifier for the indexation / matching metric to be
+mapped, for template matching valid metrics are {‘correlation’,
+‘orientation_reliability’, ‘phase_reliability’}. For vector matching
+valid metrics are {‘match_rate’, ‘ehkls’, ‘total_error’,
+‘orientation_reliability’, ‘phase_reliability’}.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>metric_map<span class="classifier">Signal2D</span></dt><dd><p>A map of the specified metric at each navigation position.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>For template matching, orientation reliability is given by</dt><dd><p>100 * (1 - second_best_correlation/best_correlation)</p>
+</dd>
+<dt>and phase reliability is given by</dt><dd><p>100 * (1 - second_best_correlation_of_other_phase/best_correlation)</p>
+</dd>
+<dt>For vector matching, orientation reliability is given by</dt><dd><p>100 * (1 - lowest_error/second_lowest_error)</p>
+</dd>
+<dt>and phase reliability is given by</dt><dd><p>100 * (1 - lowest_error/lowest_error_of_other_phase)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.get_modal_angles">
+<code class="descname">get_modal_angles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.get_modal_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the modal angles (and their fractional occurances).</p>
+<dl class="simple">
+<dt>modal_angles<span class="classifier">list</span></dt><dd><p>[modal_angles, fractional_occurance]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.get_orientation_map">
+<code class="descname">get_orientation_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.get_orientation_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a map of the rotational angle associated with the best
+matching crystal orientation at each navigation position.</p>
+<dl class="simple">
+<dt>orientation_map<span class="classifier">Signal2D</span></dt><dd><p>The rotation angle assocaiated with the orientation at each
+navigation position.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.get_phase_map">
+<code class="descname">get_phase_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.get_phase_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a map of the best matching phase at each navigation position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.crystallographic_map.CrystallographicMap.save_mtex_map">
+<code class="descname">save_mtex_map</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.CrystallographicMap.save_mtex_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save map in a format such that it can be imported into MTEX
+<a class="reference external" href="http://mtex-toolbox.github.io/">http://mtex-toolbox.github.io/</a></p>
+<p>Columns:
+1 = phase id,
+2-4 = Euler angles in the zxz convention (radians),
+5 = Correlation score (only the best match is saved),
+6 = x co-ord in navigation space,
+7 = y co-ord in navigation space.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.signals.crystallographic_map.load_mtex_map">
+<code class="descclassname">pyxem.signals.crystallographic_map.</code><code class="descname">load_mtex_map</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.crystallographic_map.load_mtex_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a crystallographic map saved by previously saved via .save_map()</p>
+<p>Columns:
+1 = phase id,
+2-4 = Euler angles in the zxz convention (radians),
+5 = Correlation score (only the best match is saved),
+6 = x co-ord in navigation space,
+7 = y co-ord in navigation space.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">string</span></dt><dd><p>Path to the file to be loaded.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>crystallographic_map<span class="classifier">CrystallographicMap</span></dt><dd><p>Crystallographic map loaded from the specified file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.diffraction_profile">
+<span id="pyxem-signals-diffraction-profile-module"></span><h2>pyxem.signals.diffraction_profile module<a class="headerlink" href="#module-pyxem.signals.diffraction_profile" title="Permalink to this headline">¶</a></h2>
+<p>Signal class for Electron Diffraction radial profiles</p>
+<dl class="class">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile">
+<em class="property">class </em><code class="descclassname">pyxem.signals.diffraction_profile.</code><code class="descname">ElectronDiffractionProfile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal1d.Signal1D</span></code></p>
+<dl class="method">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile.get_virtual_image">
+<code class="descname">get_virtual_image</code><span class="sig-paren">(</span><em>left</em>, <em>right</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile.get_virtual_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains a virtual image associated with a specified scattering range.</p>
+<dl class="simple">
+<dt>left<span class="classifier">float</span></dt><dd><p>Lower bound of the data range to be plotted.</p>
+</dd>
+<dt>right<span class="classifier">float</span></dt><dd><p>Upper bound of the data range to be plotted.</p>
+</dd>
+</dl>
+<dl>
+<dt>dark_field_sum<span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.signals.BaseSignal</span></code></span></dt><dd><p>The virtual image signal associated with the specified scattering
+range.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rp</span><span class="o">.</span><span class="n">get_virtual_image</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile.plot_interactive_virtual_image">
+<code class="descname">plot_interactive_virtual_image</code><span class="sig-paren">(</span><em>left</em>, <em>right</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile.plot_interactive_virtual_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots an interactive virtual image formed by integrating scatterered
+intensity over a specified range.</p>
+<dl class="simple">
+<dt>left<span class="classifier">float</span></dt><dd><p>Lower bound of the data range to be plotted.</p>
+</dd>
+<dt>right<span class="classifier">float</span></dt><dd><p>Upper bound of the data range to be plotted.</p>
+</dd>
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to <cite>ElectronDiffractionProfile.plot</cite></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rp</span><span class="o">.</span><span class="n">plot_interactive_virtual_image</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_diffraction_calibration">
+<code class="descname">set_diffraction_calibration</code><span class="sig-paren">(</span><em>calibration</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_diffraction_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set diffraction profile channel size in reciprocal Angstroms.</p>
+<dl class="simple">
+<dt>calibration<span class="classifier">float</span></dt><dd><p>Diffraction profile calibration in reciprocal Angstroms per pixel.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_experimental_parameters">
+<code class="descname">set_experimental_parameters</code><span class="sig-paren">(</span><em>accelerating_voltage=None</em>, <em>camera_length=None</em>, <em>scan_rotation=None</em>, <em>convergence_angle=None</em>, <em>rocking_angle=None</em>, <em>rocking_frequency=None</em>, <em>exposure_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_experimental_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set experimental parameters in metadata.</p>
+<dl class="simple">
+<dt>accelerating_voltage<span class="classifier">float</span></dt><dd><p>Accelerating voltage in kV</p>
+</dd>
+<dt>camera_length: float</dt><dd><p>Camera length in cm</p>
+</dd>
+<dt>scan_rotation<span class="classifier">float</span></dt><dd><p>Scan rotation in degrees</p>
+</dd>
+<dt>convergence_angle<span class="classifier">float</span></dt><dd><p>Convergence angle in mrad</p>
+</dd>
+<dt>rocking_angle<span class="classifier">float</span></dt><dd><p>Beam rocking angle in mrad</p>
+</dd>
+<dt>rocking_frequency<span class="classifier">float</span></dt><dd><p>Beam rocking frequency in Hz</p>
+</dd>
+<dt>exposure_time<span class="classifier">float</span></dt><dd><p>Exposure time in ms.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_scan_calibration">
+<code class="descname">set_scan_calibration</code><span class="sig-paren">(</span><em>calibration</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_profile.ElectronDiffractionProfile.set_scan_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set scan pixel size in nanometres.</p>
+<dl class="simple">
+<dt>calibration: float</dt><dd><p>Scan calibration in nanometres per pixel.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.diffraction_simulation">
+<span id="pyxem-signals-diffraction-simulation-module"></span><h2>pyxem.signals.diffraction_simulation module<a class="headerlink" href="#module-pyxem.signals.diffraction_simulation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation">
+<em class="property">class </em><code class="descclassname">pyxem.signals.diffraction_simulation.</code><code class="descname">DiffractionSimulation</code><span class="sig-paren">(</span><em>coordinates=None</em>, <em>indices=None</em>, <em>intensities=None</em>, <em>calibration=1.0</em>, <em>offset=(0.0</em>, <em>0.0)</em>, <em>with_direct_beam=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Holds the result of a kinematic diffraction pattern simulation.</p>
+<dl class="simple">
+<dt>coordinates<span class="classifier">array-like, shape [n_points, 2]</span></dt><dd><p>The x-y coordinates of points in reciprocal space.</p>
+</dd>
+<dt>indices<span class="classifier">array-like, shape [n_points, 3]</span></dt><dd><p>The indices of the reciprocal lattice points that intersect the
+Ewald sphere.</p>
+</dd>
+<dt>intensities<span class="classifier">array-like, shape [n_points, ]</span></dt><dd><p>The intensity of the reciprocal lattice points.</p>
+</dd>
+<dt>calibration<span class="classifier">float or tuple of float, optional</span></dt><dd><p>The x- and y-scales of the pattern, with respect to the original
+reciprocal angstrom coordinates.</p>
+</dd>
+<dt>offset<span class="classifier">tuple of float, optional</span></dt><dd><p>The x-y offset of the pattern in reciprocal angstroms. Defaults to
+zero in each direction.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.as_signal">
+<code class="descname">as_signal</code><span class="sig-paren">(</span><em>size</em>, <em>sigma</em>, <em>max_r</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.as_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the diffraction data as an ElectronDiffraction signal with
+two-dimensional Gaussians representing each diffracted peak. Should only
+be used for qualitative work.</p>
+<dl class="simple">
+<dt>size<span class="classifier">int</span></dt><dd><p>Side length (in pixels) for the signal to be simulated.</p>
+</dd>
+<dt>sigma<span class="classifier">float</span></dt><dd><p>Standard deviation of the Gaussian function to be plotted.</p>
+</dd>
+<dt>max_r<span class="classifier">float</span></dt><dd><p>Half the side length in reciprocal Angstroms. Defines the signal’s
+calibration</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dp<span class="classifier">ElectronDiffraction</span></dt><dd><p>Simulated electron diffraction pattern.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.calibrated_coordinates">
+<code class="descname">calibrated_coordinates</code><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.calibrated_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>ndarray : Coordinates converted into pixel space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.calibration">
+<code class="descname">calibration</code><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>tuple of float : The x- and y-scales of the pattern, with respect to
+the original reciprocal angstrom coordinates.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.coordinates">
+<code class="descname">coordinates</code><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>ndarray : The coordinates of all unmasked points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.direct_beam_mask">
+<code class="descname">direct_beam_mask</code><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.direct_beam_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>ndarray : If <cite>with_direct_beam</cite> is True, returns a True array for all
+points. If <cite>with_direct_beam</cite> is False, returns a True array with False
+in the position of the direct beam.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyxem.signals.diffraction_simulation.DiffractionSimulation.intensities">
+<code class="descname">intensities</code><a class="headerlink" href="#pyxem.signals.diffraction_simulation.DiffractionSimulation.intensities" title="Permalink to this definition">¶</a></dt>
+<dd><p>ndarray : The intensities of all unmasked points.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyxem.signals.diffraction_simulation.ProfileSimulation">
+<em class="property">class </em><code class="descclassname">pyxem.signals.diffraction_simulation.</code><code class="descname">ProfileSimulation</code><span class="sig-paren">(</span><em>magnitudes</em>, <em>intensities</em>, <em>hkls</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_simulation.ProfileSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Holds the result of a given kinematic simulation of a diffraction profile</p>
+<dl class="simple">
+<dt>magnitudes<span class="classifier">array-like, shape [n_peaks, 1]</span></dt><dd><p>Magnitudes of scattering vectors.</p>
+</dd>
+<dt>intensities<span class="classifier">array-like, shape [n_peaks, 1]</span></dt><dd><p>The kinematic intensity of the diffraction peaks.</p>
+</dd>
+<dt>hkls: [{(h, k, l): mult}] {(h, k, l): mult} is a dict of Miller</dt><dd><p>indices for all diffracted lattice facets contributing to each
+intensity.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.diffraction_simulation.ProfileSimulation.get_plot">
+<code class="descname">get_plot</code><span class="sig-paren">(</span><em>g_max</em>, <em>annotate_peaks=True</em>, <em>with_labels=True</em>, <em>fontsize=12</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_simulation.ProfileSimulation.get_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the diffraction profile simulation.</p>
+<dl class="simple">
+<dt>g_max<span class="classifier">float</span></dt><dd><p>Maximum g-vector magnitude to plot.</p>
+</dd>
+<dt>annotate_peaks<span class="classifier">boolean</span></dt><dd><p>If True, peaks are annotaed with hkl information.</p>
+</dd>
+<dt>with_labels<span class="classifier">boolean</span></dt><dd><p>If True, xlabels and ylabels are added to the plot.</p>
+</dd>
+<dt>fontsize<span class="classifier">integer</span></dt><dd><p>Fontsize for peak labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.diffraction_vectors">
+<span id="pyxem-signals-diffraction-vectors-module"></span><h2>pyxem.signals.diffraction_vectors module<a class="headerlink" href="#module-pyxem.signals.diffraction_vectors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors">
+<em class="property">class </em><code class="descclassname">pyxem.signals.diffraction_vectors.</code><code class="descname">DiffractionVectors</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></p>
+<p>Crystallographic mapping results containing the best matching crystal
+phase and orientation at each navigation position with associated metrics.</p>
+<dl class="simple">
+<dt>cartesian<span class="classifier">np.array()</span></dt><dd><p>Array of 3-vectors describing Cartesian coordinates associated with
+each diffraction vector.</p>
+</dd>
+<dt>hkls<span class="classifier">np.array()</span></dt><dd><p>Array of Miller indices associated with each diffraction vector
+following indexation.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.calculate_cartesian_coordinates">
+<code class="descname">calculate_cartesian_coordinates</code><span class="sig-paren">(</span><em>accelerating_voltage</em>, <em>camera_length</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.calculate_cartesian_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get cartesian coordinates of the diffraction vectors.</p>
+<dl class="simple">
+<dt>accelerating_voltage<span class="classifier">float</span></dt><dd><p>The acceleration voltage with which the data was acquired.</p>
+</dd>
+<dt>camera_length<span class="classifier">float</span></dt><dd><p>The camera length in meters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.get_diffracting_pixels_map">
+<code class="descname">get_diffracting_pixels_map</code><span class="sig-paren">(</span><em>binary=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.get_diffracting_pixels_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map of the number of vectors at each navigation position.</p>
+<dl class="simple">
+<dt>binary<span class="classifier">boolean</span></dt><dd><p>If True a binary image with diffracting pixels taking value == 1 is
+returned.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>crystim<span class="classifier">Signal2D</span></dt><dd><p>2D map of diffracting pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.get_magnitude_histogram">
+<code class="descname">get_magnitude_histogram</code><span class="sig-paren">(</span><em>bins</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.get_magnitude_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a histogram of gvector magnitudes.</p>
+<dl class="simple">
+<dt>bins<span class="classifier">numpy array</span></dt><dd><p>The bins to be used to generate the histogram.</p>
+</dd>
+<dt><a href="#id3"><span class="problematic" id="id4">*</span></a>args:</dt><dd><p>Arguments to get_magnitudes().</p>
+</dd>
+<dt><a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs:</dt><dd><p>Keyword arguments to get_magnitudes().</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ghis<span class="classifier">Signal1D</span></dt><dd><p>Histogram of gvector magnitudes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.get_magnitudes">
+<code class="descname">get_magnitudes</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.get_magnitudes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the magnitude of diffraction vectors.</p>
+<dl class="simple">
+<dt><a href="#id7"><span class="problematic" id="id8">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs:</dt><dd><p>Keyword arguments to map().</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>magnitudes<span class="classifier">BaseSignal</span></dt><dd><p>A signal with navigation dimensions as the original diffraction
+vectors containging an array of gvector magnitudes at each
+navigation position.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.get_unique_vectors">
+<code class="descname">get_unique_vectors</code><span class="sig-paren">(</span><em>distance_threshold=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.get_unique_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the unique diffraction vectors.</p>
+<dl class="simple">
+<dt>distance_threshold<span class="classifier">float</span></dt><dd><p>The minimum distance between diffraction vectors for them to be
+considered unique diffraction vectors.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>unique_vectors<span class="classifier">DiffractionVectors</span></dt><dd><p>A DiffractionVectors object containing only the unique diffraction
+vectors in the original object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.plot_diffraction_vectors">
+<code class="descname">plot_diffraction_vectors</code><span class="sig-paren">(</span><em>xlim</em>, <em>ylim</em>, <em>distance_threshold</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.plot_diffraction_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the unique diffraction vectors.</p>
+<dl class="simple">
+<dt>xlim<span class="classifier">float</span></dt><dd><p>The maximum x coordinate to be plotted.</p>
+</dd>
+<dt>ylim<span class="classifier">float</span></dt><dd><p>The maximum y coordinate to be plotted.</p>
+</dd>
+<dt>distance_threshold<span class="classifier">float</span></dt><dd><p>The minimum distance between diffraction vectors to be passed to
+get_unique_vectors.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>fig<span class="classifier">matplotlib figure</span></dt><dd><p>The plot as a matplot lib figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.diffraction_vectors.DiffractionVectors.plot_diffraction_vectors_on_signal">
+<code class="descname">plot_diffraction_vectors_on_signal</code><span class="sig-paren">(</span><em>signal</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.diffraction_vectors.DiffractionVectors.plot_diffraction_vectors_on_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the diffraction vectors on a signal.</p>
+<dl class="simple">
+<dt>signal<span class="classifier">ElectronDiffraction</span></dt><dd><p>The ElectronDiffraction signal object on which to plot the peaks.
+This signal must have the same navigation dimensions as the peaks.</p>
+</dd>
+<dt><a href="#id11"><span class="problematic" id="id12">*</span></a>args :</dt><dd><p>Arguments passed to signal.plot()</p>
+</dd>
+<dt><a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs :</dt><dd><p>Keyword arguments passed to signal.plot()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.electron_diffraction">
+<span id="pyxem-signals-electron-diffraction-module"></span><h2>pyxem.signals.electron_diffraction module<a class="headerlink" href="#module-pyxem.signals.electron_diffraction" title="Permalink to this headline">¶</a></h2>
+<p>Signal class for Electron Diffraction data.</p>
+<dl class="class">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction">
+<em class="property">class </em><code class="descclassname">pyxem.signals.electron_diffraction.</code><code class="descname">ElectronDiffraction</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal2d.Signal2D</span></code></p>
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.apply_affine_transformation">
+<code class="descname">apply_affine_transformation</code><span class="sig-paren">(</span><em>D</em>, <em>order=3</em>, <em>inplace=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.apply_affine_transformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correct geometric distortion by applying an affine transformation.</p>
+<dl class="simple">
+<dt>D<span class="classifier">array</span></dt><dd><p>3x3 np.array specifying the affine transform to be applied.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If True (default), this signal is overwritten. Otherwise, returns a
+new signal.</p>
+</dd>
+<dt><a href="#id15"><span class="problematic" id="id16">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id17"><span class="problematic" id="id18">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>ElectronDiffraction Signal containing the affine Transformed
+diffraction patterns.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.apply_gain_normalisation">
+<code class="descname">apply_gain_normalisation</code><span class="sig-paren">(</span><em>dark_reference</em>, <em>bright_reference</em>, <em>inplace=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.apply_gain_normalisation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply gain normalization to experimentally acquired electron
+diffraction patterns.</p>
+<dl class="simple">
+<dt>dark_reference<span class="classifier">ElectronDiffraction</span></dt><dd><p>Dark reference image.</p>
+</dd>
+<dt>bright_reference<span class="classifier">DiffractionSignal</span></dt><dd><p>Bright reference image.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If True (default), this signal is overwritten. Otherwise, returns a
+new signal.</p>
+</dd>
+<dt><a href="#id19"><span class="problematic" id="id20">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.center_direct_beam">
+<code class="descname">center_direct_beam</code><span class="sig-paren">(</span><em>radius_start</em>, <em>radius_finish</em>, <em>square_width=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.center_direct_beam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the direct beam position in each experimentally acquired
+electron diffraction pattern and translate it to the center of the
+image square.</p>
+<dl class="simple">
+<dt>radius_start<span class="classifier">int</span></dt><dd><p>The lower bound for the radius of the central disc to be used in the
+alignment.</p>
+</dd>
+<dt>radius_finish<span class="classifier">int</span></dt><dd><p>The upper bounds for the radius of the central disc to be used in
+the alignment.</p>
+</dd>
+<dt>square_width<span class="classifier">int</span></dt><dd><p>Half the side length of square that captures the direct beam in all
+scans. Means that the centering algorithm is stable against
+diffracted spots brighter than the direct beam.</p>
+</dd>
+<dt><a href="#id23"><span class="problematic" id="id24">*</span></a>args:</dt><dd><p>Arguments to be passed to align2D().</p>
+</dd>
+<dt><a href="#id25"><span class="problematic" id="id26">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to align2D().</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>centered<span class="classifier">ElectronDiffraction</span></dt><dd><p>The centered diffraction data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.decomposition">
+<code class="descname">decomposition</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.decomposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decomposition with a choice of algorithms.</p>
+<dl class="simple">
+<dt><a href="#id27"><span class="problematic" id="id28">*</span></a>args :</dt><dd><p>Arguments to be passed to decomposition().</p>
+</dd>
+<dt><a href="#id29"><span class="problematic" id="id30">**</span></a>kwargs :</dt><dd><p>Keyword arguments to be passed to decomposition().</p>
+</dd>
+</dl>
+<p>The results are stored in self.learning_results. For a full description
+of parameters see <code class="xref py py-meth docutils literal notranslate"><span class="pre">hyperspy.learn.mva.MVA.decomposition()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.find_peaks">
+<code class="descname">find_peaks</code><span class="sig-paren">(</span><em>method</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.find_peaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the position of diffraction peaks.</p>
+<p>Function to locate the positive peaks in an image using various, user
+specified, methods. Returns a structured array containing the peak
+positions.</p>
+<dl class="simple">
+<dt>method<span class="classifier">str</span></dt><dd><p>Select peak finding algorithm to implement. Available methods are
+{‘zaefferer’, ‘stat’, ‘laplacian_of_gaussians’,
+‘difference_of_gaussians’, ‘xc’}</p>
+</dd>
+<dt><a href="#id31"><span class="problematic" id="id32">*</span></a>args<span class="classifier">arguments</span></dt><dd><p>Arguments to be passed to the peak finders.</p>
+</dd>
+<dt><a href="#id33"><span class="problematic" id="id34">**</span></a>kwargs<span class="classifier">arguments</span></dt><dd><p>Keyword arguments to be passed to the peak finders.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>peaks<span class="classifier">DiffractionVectors</span></dt><dd><p>A DiffractionVectors object with navigation dimensions identical to
+the original ElectronDiffraction object. Each signal is a BaseSignal
+object contiaining the diffraction vectors found at each navigation
+position, in calibrated units.</p>
+</dd>
+</dl>
+<p>Peak finding methods are detailed as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘zaefferer’ - based on gradient thresholding and refinement
+by local region of interest optimisation</p></li>
+<li><p>‘stat’ - statistical approach requiring no free params.</p></li>
+<li><p>‘laplacian_of_gaussians’ - a blob finder implemented in
+<cite>scikit-image</cite> which uses the laplacian of Gaussian matrices
+approach.</p></li>
+<li><p>‘difference_of_gaussians’ - a blob finder implemented in
+<cite>scikit-image</cite> which uses the difference of Gaussian matrices
+approach.</p></li>
+<li><p>‘xc’ - A cross correlation peakfinder</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.find_peaks_interactive">
+<code class="descname">find_peaks_interactive</code><span class="sig-paren">(</span><em>disc_image=None</em>, <em>imshow_kwargs={}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.find_peaks_interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find peaks using an interactive tool.</p>
+<dl class="simple">
+<dt>disc_image<span class="classifier">numpy.array</span></dt><dd><p>See .utils.peakfinders2D.peak_finder_xc for details. If not
+given a warning will be raised.</p>
+</dd>
+<dt>imshow_kwargs<span class="classifier">arguments</span></dt><dd><p>kwargs to be passed to internal imshow statements</p>
+</dd>
+</dl>
+<p>Requires <cite>ipywidgets</cite> and <cite>traitlets</cite> to be installed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.get_direct_beam_mask">
+<code class="descname">get_direct_beam_mask</code><span class="sig-paren">(</span><em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.get_direct_beam_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a signal mask for the direct beam.</p>
+<dl class="simple">
+<dt>radius<span class="classifier">float</span></dt><dd><p>Radius for the circular mask in pixel units.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>signal-mask<span class="classifier">ndarray</span></dt><dd><p>The mask of the direct beam</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.get_direct_beam_position">
+<code class="descname">get_direct_beam_position</code><span class="sig-paren">(</span><em>radius_start</em>, <em>radius_finish</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.get_direct_beam_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the direct beam position in each experimentally acquired
+electron diffraction pattern.</p>
+<dl class="simple">
+<dt>radius_start<span class="classifier">int</span></dt><dd><p>The lower bound for the radius of the central disc to be used in the
+alignment.</p>
+</dd>
+<dt>radius_finish<span class="classifier">int</span></dt><dd><p>The upper bounds for the radius of the central disc to be used in
+the alignment.</p>
+</dd>
+<dt><a href="#id35"><span class="problematic" id="id36">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id37"><span class="problematic" id="id38">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>centers<span class="classifier">ndarray</span></dt><dd><p>Array containing the centers for each SED pattern.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.get_radial_profile">
+<code class="descname">get_radial_profile</code><span class="sig-paren">(</span><em>mask_array=None</em>, <em>inplace=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.get_radial_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the radial profile of the diffraction pattern.</p>
+<dl class="simple">
+<dt>mask_array<span class="classifier">numpy.array</span></dt><dd><p>Optional array with the same dimensions as the signal axes.
+Consists of 0s for excluded pixels and 1s for non-excluded
+pixels. The 0-pixels are excluded from the radial average.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If True (default), this signal is overwritten. Otherwise, returns a
+new signal.</p>
+</dd>
+<dt><a href="#id39"><span class="problematic" id="id40">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id41"><span class="problematic" id="id42">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>radial_profile: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.signals.Signal1D</span></code></dt><dd><p>The radial average profile of each diffraction pattern in the
+ElectronDiffraction signal as a Signal1D.</p>
+</dd>
+</dl>
+<p><a class="reference internal" href="pyxem.utils.html#pyxem.utils.expt_utils.radial_average" title="pyxem.utils.expt_utils.radial_average"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyxem.utils.expt_utils.radial_average()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.get_virtual_image">
+<code class="descname">get_virtual_image</code><span class="sig-paren">(</span><em>roi</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.get_virtual_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains a virtual image associated with a specified ROI.</p>
+<dl class="simple">
+<dt>roi: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></dt><dd><p>Any interactive ROI detailed in HyperSpy.</p>
+</dd>
+</dl>
+<dl>
+<dt>dark_field_sum<span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.signals.BaseSignal</span></code></span></dt><dd><p>The virtual image signal associated with the specified roi.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="kn">as</span> <span class="nn">hs</span>
+<span class="n">roi</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">CircleROI</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">get_virtual_image</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.plot_interactive_virtual_image">
+<code class="descname">plot_interactive_virtual_image</code><span class="sig-paren">(</span><em>roi</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.plot_interactive_virtual_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots an interactive virtual image formed with a specified and
+adjustable roi.</p>
+<dl class="simple">
+<dt>roi: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></dt><dd><p>Any interactive ROI detailed in HyperSpy.</p>
+</dd>
+<dt><a href="#id43"><span class="problematic" id="id44">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to <cite>ElectronDiffraction.plot</cite></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="kn">as</span> <span class="nn">hs</span>
+<span class="n">roi</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">CircleROI</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">plot_interactive_virtual_image</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.remove_background">
+<code class="descname">remove_background</code><span class="sig-paren">(</span><em>method</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.remove_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform background subtraction via multiple methods.</p>
+<dl class="simple">
+<dt>method<span class="classifier">string</span></dt><dd><p>Specify the method used to determine the direct beam position.</p>
+<ul class="simple">
+<li><p>‘h-dome’ -</p></li>
+<li><dl class="simple">
+<dt>‘gaussian_difference’ - Uses a difference between two gaussian</dt><dd><p>convolutions to determine where the peaks are,
+and sets all other pixels to 0.</p>
+</dd>
+</dl>
+</li>
+<li><p>‘median’ - Use a median filter for background removal</p></li>
+<li><dl class="simple">
+<dt>‘reference_pattern’ - Subtract a user-defined reference patterns</dt><dd><p>from every diffraction pattern.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>sigma_min<span class="classifier">int, float</span></dt><dd><p>Standard deviation for the minimum gaussian convolution
+(gaussian_difference only)</p>
+</dd>
+<dt>sigma_max<span class="classifier">int, float</span></dt><dd><p>Standard deviation for the maximum gaussian convolution
+(gaussian_difference only)</p>
+</dd>
+<dt>footprint<span class="classifier">int</span></dt><dd><p>Size of the window that is convoluted with the array to determine
+the median. Should be large enough that it is about 3x as big as the
+size of the peaks (median only).</p>
+</dd>
+<dt>implementation<span class="classifier">‘scipy’ or ‘skimage’</span></dt><dd><p>(median only) see expt_utils.subtract_background_median
+for details, if not selected ‘scipy’ is used</p>
+</dd>
+<dt>bg<span class="classifier">array</span></dt><dd><p>Background array extracted from vacuum. (subtract_reference only)</p>
+</dd>
+<dt><a href="#id45"><span class="problematic" id="id46">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id47"><span class="problematic" id="id48">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+<dl>
+<dt>bg_subtracted<span class="classifier"><a class="reference internal" href="#pyxem.signals.electron_diffraction.ElectronDiffraction" title="pyxem.signals.electron_diffraction.ElectronDiffraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElectronDiffraction</span></code></a></span></dt><dd><p>A copy of the data with the background subtracted. Be aware that
+this function will only return inplace.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.remove_deadpixels">
+<code class="descname">remove_deadpixels</code><span class="sig-paren">(</span><em>deadpixels</em>, <em>deadvalue='average'</em>, <em>inplace=True</em>, <em>progress_bar=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.remove_deadpixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove deadpixels from experimentally acquired diffraction patterns.</p>
+<dl class="simple">
+<dt>deadpixels<span class="classifier">ElectronDiffraction</span></dt><dd><p>List</p>
+</dd>
+<dt>deadvalue<span class="classifier">string</span></dt><dd><p>Specify how deadpixels should be treated. ‘average’ sets the dead
+pixel value to the average of adjacent pixels. ‘nan’ sets the dead
+pixel to nan</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If True (default), this signal is overwritten. Otherwise, returns a
+new signal.</p>
+</dd>
+<dt><a href="#id49"><span class="problematic" id="id50">*</span></a>args:</dt><dd><p>Arguments to be passed to map().</p>
+</dd>
+<dt><a href="#id51"><span class="problematic" id="id52">**</span></a>kwargs:</dt><dd><p>Keyword arguments to be passed to map().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.set_diffraction_calibration">
+<code class="descname">set_diffraction_calibration</code><span class="sig-paren">(</span><em>calibration</em>, <em>center=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.set_diffraction_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set diffraction pattern pixel size in reciprocal Angstroms and origin
+location.</p>
+<dl class="simple">
+<dt>calibration<span class="classifier">float</span></dt><dd><p>Diffraction pattern calibration in reciprocal Angstroms per pixel.</p>
+</dd>
+<dt>center<span class="classifier">tuple</span></dt><dd><p>Position of the direct beam center, in pixels. If None the center of
+the data array is assumed to be the center of the pattern.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.set_experimental_parameters">
+<code class="descname">set_experimental_parameters</code><span class="sig-paren">(</span><em>accelerating_voltage=None</em>, <em>camera_length=None</em>, <em>scan_rotation=None</em>, <em>convergence_angle=None</em>, <em>rocking_angle=None</em>, <em>rocking_frequency=None</em>, <em>exposure_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.set_experimental_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set experimental parameters in metadata.</p>
+<dl class="simple">
+<dt>accelerating_voltage<span class="classifier">float</span></dt><dd><p>Accelerating voltage in kV</p>
+</dd>
+<dt>camera_length: float</dt><dd><p>Camera length in cm</p>
+</dd>
+<dt>scan_rotation<span class="classifier">float</span></dt><dd><p>Scan rotation in degrees</p>
+</dd>
+<dt>convergence_angle<span class="classifier">float</span></dt><dd><p>Convergence angle in mrad</p>
+</dd>
+<dt>rocking_angle<span class="classifier">float</span></dt><dd><p>Beam rocking angle in mrad</p>
+</dd>
+<dt>rocking_frequency<span class="classifier">float</span></dt><dd><p>Beam rocking frequency in Hz</p>
+</dd>
+<dt>exposure_time<span class="classifier">float</span></dt><dd><p>Exposure time in ms.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.electron_diffraction.ElectronDiffraction.set_scan_calibration">
+<code class="descname">set_scan_calibration</code><span class="sig-paren">(</span><em>calibration</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.electron_diffraction.ElectronDiffraction.set_scan_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set scan pixel size in nanometres.</p>
+<dl class="simple">
+<dt>calibration: float</dt><dd><p>Scan calibration in nanometres per pixel.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.indexation_results">
+<span id="pyxem-signals-indexation-results-module"></span><h2>pyxem.signals.indexation_results module<a class="headerlink" href="#module-pyxem.signals.indexation_results" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.signals.indexation_results.TemplateMatchingResults">
+<em class="property">class </em><code class="descclassname">pyxem.signals.indexation_results.</code><code class="descname">TemplateMatchingResults</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.TemplateMatchingResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></p>
+<p>Template matching results containing the top n best matching crystal
+phase and orientation at each navigation position with associated metrics.</p>
+<dl class="simple">
+<dt>vectors<span class="classifier">DiffractionVectors</span></dt><dd><p>Diffraction vectors indexed.</p>
+</dd>
+<dt>hkls<span class="classifier">BaseSignal</span></dt><dd><p>Miller indices associated with each diffraction vector.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.indexation_results.TemplateMatchingResults.get_crystallographic_map">
+<code class="descname">get_crystallographic_map</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.TemplateMatchingResults.get_crystallographic_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a crystallographic map specifying the best matching phase and
+orientation at each probe position with corresponding metrics.</p>
+<dl>
+<dt>cryst_map<span class="classifier">CrystallographicMap</span></dt><dd><p>Crystallographic mapping results containing the best matching phase
+and orientation at each navigation position with associated metrics.</p>
+<p>The Signal at each navigation position is an array of,</p>
+<blockquote>
+<div><p>[phase, np.array((z,x,z)), dict(metrics)]</p>
+</div></blockquote>
+<p>which defines the phase, orientation as Euler angles in the zxz
+convention and metrics associated with the matching.</p>
+<dl class="simple">
+<dt>Metrics for template matching results are</dt><dd><p>‘correlation’
+‘orientation_reliability’
+‘phase_reliability’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.indexation_results.TemplateMatchingResults.plot_best_matching_results_on_signal">
+<code class="descname">plot_best_matching_results_on_signal</code><span class="sig-paren">(</span><em>signal</em>, <em>library</em>, <em>permanent_markers=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.TemplateMatchingResults.plot_best_matching_results_on_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the best matching diffraction vectors on a signal.</p>
+<dl class="simple">
+<dt>signal<span class="classifier">ElectronDiffraction</span></dt><dd><p>The ElectronDiffraction signal object on which to plot the peaks.
+This signal must have the same navigation dimensions as the peaks.</p>
+</dd>
+<dt>library<span class="classifier">DiffractionLibrary</span></dt><dd><p>Diffraction library containing the phases and rotations</p>
+</dd>
+<dt>permanent_markers<span class="classifier">bool</span></dt><dd><p>Permanently save the peaks as markers on the signal</p>
+</dd>
+<dt><a href="#id53"><span class="problematic" id="id54">*</span></a>args :</dt><dd><p>Arguments passed to signal.plot()</p>
+</dd>
+<dt><a href="#id55"><span class="problematic" id="id56">**</span></a>kwargs :</dt><dd><p>Keyword arguments passed to signal.plot()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyxem.signals.indexation_results.VectorMatchingResults">
+<em class="property">class </em><code class="descclassname">pyxem.signals.indexation_results.</code><code class="descname">VectorMatchingResults</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.VectorMatchingResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></p>
+<p>Vector matching results containing the top n best matching crystal
+phase and orientation at each navigation position with associated metrics.</p>
+<dl class="simple">
+<dt>vectors<span class="classifier">DiffractionVectors</span></dt><dd><p>Diffraction vectors indexed.</p>
+</dd>
+<dt>hkls<span class="classifier">BaseSignal</span></dt><dd><p>Miller indices associated with each diffraction vector.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.signals.indexation_results.VectorMatchingResults.get_crystallographic_map">
+<code class="descname">get_crystallographic_map</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.VectorMatchingResults.get_crystallographic_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a crystallographic map specifying the best matching phase and
+orientation at each probe position with corresponding metrics.</p>
+<dl>
+<dt>cryst_map<span class="classifier">CrystallographicMap</span></dt><dd><p>Crystallographic mapping results containing the best matching phase
+and orientation at each navigation position with associated metrics.</p>
+<p>The Signal at each navigation position is an array of,</p>
+<blockquote>
+<div><p>[phase, np.array((z,x,z)), dict(metrics)]</p>
+</div></blockquote>
+<p>which defines the phase, orientation as Euler angles in the zxz
+convention and metrics associated with the matching.</p>
+<dl class="simple">
+<dt>Metrics for template matching results are</dt><dd><p>‘match_rate’
+‘total_error’
+‘orientation_reliability’
+‘phase_reliability’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.indexation_results.VectorMatchingResults.get_indexed_diffraction_vectors">
+<code class="descname">get_indexed_diffraction_vectors</code><span class="sig-paren">(</span><em>vectors</em>, <em>overwrite=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.VectorMatchingResults.get_indexed_diffraction_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain an indexed diffraction vectors object.</p>
+<dl class="simple">
+<dt>vectors<span class="classifier">DiffractionVectors</span></dt><dd><p>A diffraction vectors object to be indexed.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>indexed_vectors<span class="classifier">DiffractionVectors</span></dt><dd><p>An indexed diffraction vectors object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.indexation_results.VectorMatchingResults.plot_best_matching_results_on_signal">
+<code class="descname">plot_best_matching_results_on_signal</code><span class="sig-paren">(</span><em>signal</em>, <em>library</em>, <em>permanent_markers=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.indexation_results.VectorMatchingResults.plot_best_matching_results_on_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the best matching diffraction vectors on a signal.</p>
+<dl class="simple">
+<dt>signal<span class="classifier">ElectronDiffraction</span></dt><dd><p>The ElectronDiffraction signal object on which to plot the peaks.
+This signal must have the same navigation dimensions as the peaks.</p>
+</dd>
+<dt>library<span class="classifier">DiffractionLibrary</span></dt><dd><p>Diffraction library containing the phases and rotations</p>
+</dd>
+<dt>permanent_markers<span class="classifier">bool</span></dt><dd><p>Permanently save the peaks as markers on the signal. Default True.</p>
+</dd>
+<dt><a href="#id57"><span class="problematic" id="id58">*</span></a>args :</dt><dd><p>Arguments passed to signal.plot()</p>
+</dd>
+<dt><a href="#id59"><span class="problematic" id="id60">**</span></a>kwargs :</dt><dd><p>Keyword arguments passed to signal.plot()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.tensor_field">
+<span id="pyxem-signals-tensor-field-module"></span><h2>pyxem.signals.tensor_field module<a class="headerlink" href="#module-pyxem.signals.tensor_field" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.signals.tensor_field.DisplacementGradientMap">
+<em class="property">class </em><code class="descclassname">pyxem.signals.tensor_field.</code><code class="descname">DisplacementGradientMap</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.tensor_field.DisplacementGradientMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal2d.Signal2D</span></code></p>
+<dl class="method">
+<dt id="pyxem.signals.tensor_field.DisplacementGradientMap.get_strain_maps">
+<code class="descname">get_strain_maps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.tensor_field.DisplacementGradientMap.get_strain_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain strain maps from the displacement gradient tensor at each
+navigation position in the small strain approximation.</p>
+<dl class="simple">
+<dt>strain_results<span class="classifier">BaseSignal</span></dt><dd><p>Signal of shape &lt; 4 | , &gt; , navigation order is e11,e22,e12,theta</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.signals.tensor_field.DisplacementGradientMap.polar_decomposition">
+<code class="descname">polar_decomposition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.tensor_field.DisplacementGradientMap.polar_decomposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform polar decomposition on the second rank tensors describing
+the TensorField. The polar decomposition is right handed and given by
+<span class="math notranslate nohighlight">\(D = RU\)</span></p>
+<dl class="simple">
+<dt>R<span class="classifier">TensorField</span></dt><dd><p>The orthogonal matrix describing the rotation field.</p>
+</dd>
+<dt>U<span class="classifier">TensorField</span></dt><dd><p>The strain tensor field.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals.vdf_image">
+<span id="pyxem-signals-vdf-image-module"></span><h2>pyxem.signals.vdf_image module<a class="headerlink" href="#module-pyxem.signals.vdf_image" title="Permalink to this headline">¶</a></h2>
+<p>Signal class for virtual diffraction contrast images.</p>
+<dl class="class">
+<dt id="pyxem.signals.vdf_image.VDFImage">
+<em class="property">class </em><code class="descclassname">pyxem.signals.vdf_image.</code><code class="descname">VDFImage</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.signals.vdf_image.VDFImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal2d.Signal2D</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.signals">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyxem.signals" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyxem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Duncan Johnstone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pyxem.signals.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
