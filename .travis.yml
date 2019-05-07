@@ -5,7 +5,7 @@ install:
 
 script:
     - make html
-
+    - sphinx-apidoc -f pyxem    
 deploy:
   provider: pages
   skip_cleanup: true
