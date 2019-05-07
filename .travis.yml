@@ -5,7 +5,7 @@ install:
 
 script:
     - make html
-    - sphinx-apidoc -of docstrings/ pyxem    
+    - sphinx-apidoc -of docstrings pyxem    
 deploy:
   provider: pages
   skip_cleanup: true
