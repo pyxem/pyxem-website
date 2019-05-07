@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.libraries package &#8212; pyxem 0.8.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pyxem-libraries-package">
+<h1>pyxem.libraries package<a class="headerlink" href="#pyxem-libraries-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyxem.libraries.diffraction_library">
+<span id="pyxem-libraries-diffraction-library-module"></span><h2>pyxem.libraries.diffraction_library module<a class="headerlink" href="#module-pyxem.libraries.diffraction_library" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.libraries.diffraction_library.DiffractionLibrary">
+<em class="property">class </em><code class="descclassname">pyxem.libraries.diffraction_library.</code><code class="descname">DiffractionLibrary</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.diffraction_library.DiffractionLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>Maps crystal structure (phase) and orientation to simulated diffraction
+data.</p>
+<dl class="simple">
+<dt>identifiers<span class="classifier">list of strings/ints</span></dt><dd><p>A list of phase identifiers referring to different atomic structures.</p>
+</dd>
+<dt>structures<span class="classifier">list of diffpy.structure.Structure objects.</span></dt><dd><p>A list of diffpy.structure.Structure objects describing the atomic
+structure associated with each phase in the library.</p>
+</dd>
+<dt>diffraction_generator<span class="classifier">DiffractionGenerator</span></dt><dd><p>Diffraction generator used to generate this library.</p>
+</dd>
+<dt>reciprocal_radius<span class="classifier">float</span></dt><dd><p>Maximum g-vector magnitude for peaks in the library.</p>
+</dd>
+<dt>with_direct_beam<span class="classifier">bool</span></dt><dd><p>Whether the direct beam included in the library or not.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.libraries.diffraction_library.DiffractionLibrary.get_library_entry">
+<code class="descname">get_library_entry</code><span class="sig-paren">(</span><em>phase=None</em>, <em>angle=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.diffraction_library.DiffractionLibrary.get_library_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a single DiffractionLibrary entry.</p>
+<dl class="simple">
+<dt>phase<span class="classifier">str</span></dt><dd><p>Key for the phase of interest. If unspecified the choice is random.</p>
+</dd>
+<dt>angle<span class="classifier">tuple</span></dt><dd><p>The orientation of interest as a tuple of Euler angles following the
+Bunge convention [z, x, z] in degrees. If unspecified the choise is
+random (the first hit).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>library_entries<span class="classifier">dict</span></dt><dd><p>Dictionary containing the simulation associated with the specified
+phase and orientation with associated properties.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyxem.libraries.diffraction_library.DiffractionLibrary.pickle_library">
+<code class="descname">pickle_library</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.diffraction_library.DiffractionLibrary.pickle_library" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a diffraction library in the pickle format.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">str</span></dt><dd><p>The location in which to save the file</p>
+</dd>
+</dl>
+<p>load_DiffractionLibrary()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.libraries.diffraction_library.load_DiffractionLibrary">
+<code class="descclassname">pyxem.libraries.diffraction_library.</code><code class="descname">load_DiffractionLibrary</code><span class="sig-paren">(</span><em>filename</em>, <em>safety=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.diffraction_library.load_DiffractionLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a previously saved diffraction library.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">str</span></dt><dd><p>The location of the file to be loaded</p>
+</dd>
+<dt>safety<span class="classifier">bool (defaults to False)</span></dt><dd><p>Unpickling is risky, this variable requires you to acknowledge this.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>DiffractionLibrary</dt><dd><p>Previously saved Library</p>
+</dd>
+</dl>
+<p>DiffractionLibrary.pickle_library()</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.libraries.structure_library">
+<span id="pyxem-libraries-structure-library-module"></span><h2>pyxem.libraries.structure_library module<a class="headerlink" href="#module-pyxem.libraries.structure_library" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.libraries.structure_library.StructureLibrary">
+<em class="property">class </em><code class="descclassname">pyxem.libraries.structure_library.</code><code class="descname">StructureLibrary</code><span class="sig-paren">(</span><em>identifiers</em>, <em>structures</em>, <em>orientations</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.structure_library.StructureLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A dictionary containing all the structures and their associated rotations
+in the .struct_lib attribute.</p>
+<dl class="simple">
+<dt>identifiers<span class="classifier">list of strings/ints</span></dt><dd><p>A list of phase identifiers referring to different atomic structures.</p>
+</dd>
+<dt>structures<span class="classifier">list of diffpy.structure.Structure objects.</span></dt><dd><p>A list of diffpy.structure.Structure objects describing the atomic
+structure associated with each phase in the library.</p>
+</dd>
+<dt>orientations<span class="classifier">list</span></dt><dd><p>A list over identifiers of lists of euler angles (as tuples) in the rzxz
+convention and in degrees.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.libraries.vector_library">
+<span id="pyxem-libraries-vector-library-module"></span><h2>pyxem.libraries.vector_library module<a class="headerlink" href="#module-pyxem.libraries.vector_library" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyxem.libraries.vector_library.DiffractionVectorLibrary">
+<em class="property">class </em><code class="descclassname">pyxem.libraries.vector_library.</code><code class="descname">DiffractionVectorLibrary</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.vector_library.DiffractionVectorLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>Maps crystal structure (phase) to diffraction vectors.</p>
+<dl class="simple">
+<dt>identifiers<span class="classifier">list of strings/ints</span></dt><dd><p>A list of phase identifiers referring to different atomic structures.</p>
+</dd>
+<dt>structures<span class="classifier">list of diffpy.structure.Structure objects.</span></dt><dd><p>A list of diffpy.structure.Structure objects describing the atomic
+structure associated with each phase in the library.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyxem.libraries.vector_library.DiffractionVectorLibrary.pickle_library">
+<code class="descname">pickle_library</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.vector_library.DiffractionVectorLibrary.pickle_library" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a diffraction library in the pickle format.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">str</span></dt><dd><p>The location in which to save the file</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>load_VectorLibrary()</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.libraries.vector_library.load_VectorLibrary">
+<code class="descclassname">pyxem.libraries.vector_library.</code><code class="descname">load_VectorLibrary</code><span class="sig-paren">(</span><em>filename</em>, <em>safety=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.libraries.vector_library.load_VectorLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a previously saved vectorlibrary.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">str</span></dt><dd><p>The location of the file to be loaded</p>
+</dd>
+<dt>safety<span class="classifier">bool (defaults to False)</span></dt><dd><p>Unpickling is risky, this variable requires you to acknowledge this.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>VectorLibrary</dt><dd><p>Previously saved Library</p>
+</dd>
+</dl>
+<p>VectorLibrary.pickle_library()</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.libraries">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyxem.libraries" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyxem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Duncan Johnstone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pyxem.libraries.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

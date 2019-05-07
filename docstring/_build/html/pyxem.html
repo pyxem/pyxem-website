@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem package &#8212; pyxem 0.8.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pyxem-package">
+<h1>pyxem package<a class="headerlink" href="#pyxem-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.components.html">pyxem.components package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.components.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.components.html#module-pyxem.components.diffraction_component">pyxem.components.diffraction_component module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.components.html#module-pyxem.components.scalable_reference_pattern">pyxem.components.scalable_reference_pattern module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.components.html#module-pyxem.components">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.generators.html">pyxem.generators package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.diffraction_generator">pyxem.generators.diffraction_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.displacement_gradient_tensor_generator">pyxem.generators.displacement_gradient_tensor_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.indexation_generator">pyxem.generators.indexation_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.library_generator">pyxem.generators.library_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.structure_library_generator">pyxem.generators.structure_library_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.subpixelrefinement_generator">pyxem.generators.subpixelrefinement_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.vdf_generator">pyxem.generators.vdf_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.io_plugins.html">pyxem.io_plugins package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.io_plugins.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.io_plugins.html#module-pyxem.io_plugins.mib">pyxem.io_plugins.mib module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.io_plugins.html#module-pyxem.io_plugins">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.libraries.html">pyxem.libraries package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.libraries.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.diffraction_library">pyxem.libraries.diffraction_library module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.structure_library">pyxem.libraries.structure_library module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.vector_library">pyxem.libraries.vector_library module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.signals.html">pyxem.signals package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.crystallographic_map">pyxem.signals.crystallographic_map module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_profile">pyxem.signals.diffraction_profile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_simulation">pyxem.signals.diffraction_simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_vectors">pyxem.signals.diffraction_vectors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.electron_diffraction">pyxem.signals.electron_diffraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.indexation_results">pyxem.signals.indexation_results module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.tensor_field">pyxem.signals.tensor_field module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.vdf_image">pyxem.signals.vdf_image module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.tests.html">pyxem.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_components.html">pyxem.tests.test_components package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_components.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_components.html#pyxem-tests-test-components-test-diffraction-component-module">pyxem.tests.test_components.test_diffraction_component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_components.html#pyxem-tests-test-components-test-scalable-reference-pattern-module">pyxem.tests.test_components.test_scalable_reference_pattern module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_components.html#module-pyxem.tests.test_components">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_generators.html">pyxem.tests.test_generators package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-diffraction-generator-module">pyxem.tests.test_generators.test_diffraction_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-displacement-gradient-tensor-generator-module">pyxem.tests.test_generators.test_displacement_gradient_tensor_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-indexation-generator-module">pyxem.tests.test_generators.test_indexation_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-library-generator-module">pyxem.tests.test_generators.test_library_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-structure-library-generator-module">pyxem.tests.test_generators.test_structure_library_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-subpixelrefinement-generator-module">pyxem.tests.test_generators.test_subpixelrefinement_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-vdf-generator-module">pyxem.tests.test_generators.test_vdf_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_library.html">pyxem.tests.test_library package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_library.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-diffraction-library-module">pyxem.tests.test_library.test_diffraction_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-vector-library-module">pyxem.tests.test_library.test_vector_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_library.html#module-pyxem.tests.test_library">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_physical.html">pyxem.tests.test_physical package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-marker-plotting-module">pyxem.tests.test_physical.test_marker_plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical.test_orientation_mapping_nonphys">pyxem.tests.test_physical.test_orientation_mapping_nonphys module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-orientation-mapping-phys-module">pyxem.tests.test_physical.test_orientation_mapping_phys module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-strain-mapping-module">pyxem.tests.test_physical.test_strain_mapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_signals.html">pyxem.tests.test_signals package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-crystallographic-map-module">pyxem.tests.test_signals.test_crystallographic_map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-profile-module">pyxem.tests.test_signals.test_diffraction_profile module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-simulation-module">pyxem.tests.test_signals.test_diffraction_simulation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-vectors-module">pyxem.tests.test_signals.test_diffraction_vectors module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-electron-diffraction-module">pyxem.tests.test_signals.test_electron_diffraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-indexation-results-module">pyxem.tests.test_signals.test_indexation_results module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-tensor-field-module">pyxem.tests.test_signals.test_tensor_field module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.test_utils.html">pyxem.tests.test_utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-expt-utils-module">pyxem.tests.test_utils.test_expt_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_indexation_utils">pyxem.tests.test_utils.test_indexation_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-peakfinders2d-module">pyxem.tests.test_utils.test_peakfinders2D module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-sim-utils-module">pyxem.tests.test_utils.test_sim_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-subpixel-utils-module">pyxem.tests.test_utils.test_subpixel_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-vector-utils-module">pyxem.tests.test_utils.test_vector_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.html#pyxem-tests-conftest-module">pyxem.tests.conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.html#module-pyxem.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.utils.html">pyxem.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.atomic_scattering_params">pyxem.utils.atomic_scattering_params module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.expt_utils">pyxem.utils.expt_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.indexation_utils">pyxem.utils.indexation_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.lobato_scattering_params">pyxem.utils.lobato_scattering_params module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.peakfinder2D_gui">pyxem.utils.peakfinder2D_gui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.peakfinders2D">pyxem.utils.peakfinders2D module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.plot">pyxem.utils.plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.scattering_params">pyxem.utils.scattering_params module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.sim_utils">pyxem.utils.sim_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.subpixel_refinements_utils">pyxem.utils.subpixel_refinements_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.vdf_utils">pyxem.utils.vdf_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.vector_utils">pyxem.utils.vector_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyxem.version">
+<span id="pyxem-version-module"></span><h2>pyxem.version module<a class="headerlink" href="#module-pyxem.version" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyxem">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyxem" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyxem.assign_signal_subclass">
+<code class="descclassname">pyxem.</code><code class="descname">assign_signal_subclass</code><span class="sig-paren">(</span><em>dtype</em>, <em>signal_dimension</em>, <em>signal_type=''</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.assign_signal_subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given record_by and signal_type return the matching Signal subclass.</p>
+<p>dtype : <code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code>
+signal_dimension: int
+signal_type : {None, “electron_diffraction”, “diffraction_profile”,</p>
+<blockquote>
+<div><p>“diffraction_vectors”, “crystallographic_map”, str}</p>
+</div></blockquote>
+<p>lazy: bool</p>
+<p>Signal or subclass</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.dict2signal">
+<code class="descclassname">pyxem.</code><code class="descname">dict2signal</code><span class="sig-paren">(</span><em>signal_dict</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.dict2signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a signal (or subclass) instance defined by a dictionary</p>
+<p>signal_dict : dictionary</p>
+<p>s : Signal or subclass</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.load">
+<code class="descclassname">pyxem.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filenames=None</em>, <em>signal_type=None</em>, <em>stack=False</em>, <em>stack_axis=None</em>, <em>new_axis_name='stack_element'</em>, <em>lazy=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load supported files into a pyxem structure.</p>
+<p>Supported formats: hspy (HDF5), Medipix (hdr + mib), blockfile, Gatan dm3,
+tif, msa, Bruker bcf, FEI ser and emi, SEMPER unf, EMD, EDAX spd/spc, tif,
+and a number of image formats.</p>
+<p>Additional keyword arguments are passed to the corresponding reader. For
+available options see their individual documentation, which may be found in
+either pyxem or hyperspy.</p>
+<dl>
+<dt>filenames<span class="classifier">None, str or list of strings</span></dt><dd><p>The filename to be loaded. If None, a window will open to select
+a file to load. If a valid filename is passed in that single
+file is loaded. If multiple file names are passed in
+a list, a list of objects or a single object containing the data
+of the individual files stacked are returned. This behaviour is
+controlled by the <cite>stack</cite> parameter (see bellow). Multiple
+files can be loaded by using simple shell-style wildcards,
+e.g. ‘my_file*.msa’ loads all the files that starts
+by ‘my_file’ and has the ‘.msa’ extension.</p>
+</dd>
+<dt>signal_type<span class="classifier">{None, “electron_diffraction”, “diffraction_profile”,</span></dt><dd><blockquote>
+<div><p>“diffraction_vectors”, “crystallographic_map”, str}</p>
+</div></blockquote>
+<p>The acronym that identifies the signal type.
+The value provided may determine the Signal subclass assigned to the
+data.
+If None the value is read/guessed from the file. Any other value
+overrides the value stored in the file if any.
+For electron energy-loss spectroscopy use “EELS”.
+For energy dispersive x-rays use “EDS_TEM”
+if acquired from an electron-transparent sample — as it is usually
+the case in a transmission electron  microscope (TEM) —,
+“EDS_SEM” if acquired from a non electron-transparent sample
+— as it is usually the case in a scanning electron  microscope (SEM) —.
+If “” (empty string) the value is not read from the file and is
+considered undefined.</p>
+</dd>
+<dt>stack<span class="classifier">bool</span></dt><dd><p>If True and multiple filenames are passed in, stacking all
+the data into a single object is attempted. All files must match
+in shape. If each file contains multiple (N) signals, N stacks will be
+created, with the requirement that each file contains the same number
+of signals.</p>
+</dd>
+<dt>stack_axis<span class="classifier">{None, int, str}</span></dt><dd><p>If None, the signals are stacked over a new axis. The data must
+have the same dimensions. Otherwise the
+signals are stacked over the axis given by its integer index or
+its name. The data must have the same shape, except in the dimension
+corresponding to <cite>axis</cite>.</p>
+</dd>
+<dt>new_axis_name<span class="classifier">string</span></dt><dd><p>The name of the new axis when <cite>axis</cite> is None.
+If an axis with this name already
+exists it automatically append ‘-i’, where <cite>i</cite> are integers,
+until it finds a name that is not yet in use.</p>
+</dd>
+<dt>lazy<span class="classifier">{None, bool}</span></dt><dd><p>Open the data lazily - i.e. without actually reading the data from the
+disk until required. Allows opening arbitrary-sized datasets. default
+is <cite>False</cite>.</p>
+</dd>
+<dt>print_info: bool</dt><dd><p>For SEMPER unf- and EMD (Berkley)-files, if True (default is False)
+additional information read during loading is printed for a quick
+overview.</p>
+</dd>
+<dt>downsample<span class="classifier">int (1–4095)</span></dt><dd><p>For Bruker bcf files, if set to integer (&gt;=2) (default 1)
+bcf is parsed into down-sampled size array by given integer factor,
+multiple values from original bcf pixels are summed forming downsampled
+pixel. This allows to improve signal and conserve the memory with the
+cost of lower resolution.</p>
+</dd>
+<dt>cutoff_at_kV<span class="classifier">{None, int, float}</span></dt><dd><p>For Bruker bcf files, if set to numerical (default is None)
+bcf is parsed into array with depth cutoff at coresponding given energy.
+This allows to conserve the memory, with cutting-off unused spectra’s
+tail, or force enlargement of the spectra size.</p>
+</dd>
+<dt>select_type: {‘spectrum’, ‘image’, None}</dt><dd><p>For Bruker bcf files, if one of ‘spectrum’ or ‘image’ (default is None)
+the loader returns either only hypermap or only SEM/TEM electron images.</p>
+</dd>
+</dl>
+<p>Signal instance or list of signal instances</p>
+<p>Loading a single file providing the signal type:
+&gt;&gt;&gt; d = hs.load(‘file.dm3’, signal_type=”EDS_TEM”)</p>
+<p>Loading multiple files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file1.dm3&#39;</span><span class="p">,</span><span class="s1">&#39;file2.dm3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Loading multiple files matching the pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.dm3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Loading (potentially larger than the available memory) files lazily and
+stacking:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.blo&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.load_mib">
+<code class="descclassname">pyxem.</code><code class="descname">load_mib</code><span class="sig-paren">(</span><em>filename</em>, <em>scan_size</em>, <em>sum_length=10</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.load_mib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a medipix hdr/mib file.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">string</span></dt><dd><p>File path and name to .hdr file.</p>
+</dd>
+<dt>scan_size<span class="classifier">int</span></dt><dd><p>Scan size in pixels, allows the function to reshape the array into
+the right shape.</p>
+</dd>
+<dt>sum_length<span class="classifier">int</span></dt><dd><p>Number of lines to sum over to determine scan fly back location.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.load_single_file">
+<code class="descclassname">pyxem.</code><code class="descname">load_single_file</code><span class="sig-paren">(</span><em>filename</em>, <em>signal_type=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.load_single_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load any supported file into an HyperSpy structure
+Supported formats: netCDF, msa, Gatan dm3, Ripple (rpl+raw),
+Bruker bcf, FEI ser and emi, EDAX spc and spd, hspy (HDF5), and SEMPER unf.</p>
+<dl class="simple">
+<dt>filename<span class="classifier">string</span></dt><dd><p>File name (including the extension)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.load_with_reader">
+<code class="descclassname">pyxem.</code><code class="descname">load_with_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>reader</em>, <em>signal_type=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.load_with_reader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.save">
+<code class="descclassname">pyxem.</code><code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>signal</em>, <em>overwrite=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyxem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Duncan Johnstone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pyxem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

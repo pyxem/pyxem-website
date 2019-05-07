@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem &#8212; pyxem 0.8.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pyxem">
+<h1>pyxem<a class="headerlink" href="#pyxem" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyxem.html">pyxem package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.components.html">pyxem.components package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.components.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.components.html#module-pyxem.components.diffraction_component">pyxem.components.diffraction_component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.components.html#module-pyxem.components.scalable_reference_pattern">pyxem.components.scalable_reference_pattern module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.components.html#module-pyxem.components">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.generators.html">pyxem.generators package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.diffraction_generator">pyxem.generators.diffraction_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.displacement_gradient_tensor_generator">pyxem.generators.displacement_gradient_tensor_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.indexation_generator">pyxem.generators.indexation_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.library_generator">pyxem.generators.library_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.structure_library_generator">pyxem.generators.structure_library_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.subpixelrefinement_generator">pyxem.generators.subpixelrefinement_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators.vdf_generator">pyxem.generators.vdf_generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.generators.html#module-pyxem.generators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.io_plugins.html">pyxem.io_plugins package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.io_plugins.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.io_plugins.html#module-pyxem.io_plugins.mib">pyxem.io_plugins.mib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.io_plugins.html#module-pyxem.io_plugins">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.libraries.html">pyxem.libraries package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.libraries.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.diffraction_library">pyxem.libraries.diffraction_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.structure_library">pyxem.libraries.structure_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries.vector_library">pyxem.libraries.vector_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.libraries.html#module-pyxem.libraries">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.signals.html">pyxem.signals package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.crystallographic_map">pyxem.signals.crystallographic_map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_profile">pyxem.signals.diffraction_profile module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_simulation">pyxem.signals.diffraction_simulation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.diffraction_vectors">pyxem.signals.diffraction_vectors module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.electron_diffraction">pyxem.signals.electron_diffraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.indexation_results">pyxem.signals.indexation_results module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.tensor_field">pyxem.signals.tensor_field module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals.vdf_image">pyxem.signals.vdf_image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.signals.html#module-pyxem.signals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.tests.html">pyxem.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.html#pyxem-tests-conftest-module">pyxem.tests.conftest module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.tests.html#module-pyxem.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyxem.utils.html">pyxem.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.atomic_scattering_params">pyxem.utils.atomic_scattering_params module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.expt_utils">pyxem.utils.expt_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.indexation_utils">pyxem.utils.indexation_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.lobato_scattering_params">pyxem.utils.lobato_scattering_params module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.peakfinder2D_gui">pyxem.utils.peakfinder2D_gui module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.peakfinders2D">pyxem.utils.peakfinders2D module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.plot">pyxem.utils.plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.scattering_params">pyxem.utils.scattering_params module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.sim_utils">pyxem.utils.sim_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.subpixel_refinements_utils">pyxem.utils.subpixel_refinements_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.vdf_utils">pyxem.utils.vdf_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils.vector_utils">pyxem.utils.vector_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyxem.utils.html#module-pyxem.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.html#module-pyxem.version">pyxem.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.html#module-pyxem">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyxem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Duncan Johnstone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
