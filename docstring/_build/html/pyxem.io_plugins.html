@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.io_plugins package &#8212; pyxem 0.8.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pyxem-io-plugins-package">
+<h1>pyxem.io_plugins package<a class="headerlink" href="#pyxem-io-plugins-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyxem.io_plugins.mib">
+<span id="pyxem-io-plugins-mib-module"></span><h2>pyxem.io_plugins.mib module<a class="headerlink" href="#module-pyxem.io_plugins.mib" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.file_reader">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>hdr_info=None</em>, <em>encoding='latin-1'</em>, <em>mmap_mode='c'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.file_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a Medipix hdr (.hdr) file and reads the data from the
+corresponding raw (.mib) file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.file_writer">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">file_writer</code><span class="sig-paren">(</span><em>filename</em>, <em>signal</em>, <em>encoding='latin-1'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.file_writer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.parse_hdr">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">parse_hdr</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.parse_hdr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse information from hdr (.hdr) file.
+Accepts file object ‘fp. Returns dictionary hdr_info.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.read_mib">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">read_mib</code><span class="sig-paren">(</span><em>hdr_info</em>, <em>fp</em>, <em>mmap_mode='c'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.read_mib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the raw file object ‘fp’ based on the information given in the
+‘hdr_info’ dictionary.</p>
+<dl class="simple">
+<dt>hdr_info: dict</dt><dd><p>A dictionary containing the keywords as parsed by read_hdr</p>
+</dd>
+</dl>
+<p>fp:
+mmap_mode: {None, ‘r+’, ‘r’, ‘w+’, ‘c’}, optional
+If not None, then memory-map the file, using the given mode
+(see <cite>numpy.memmap</cite>).  The mode has no effect for pickled or
+zipped files.
+A memory-mapped array is stored on disk, and not directly loaded
+into memory.  However, it can be accessed and sliced like any
+ndarray.  Memory mapping is especially useful for accessing
+small fragments of large files without reading the entire file
+into memory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.write_hdr">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">write_hdr</code><span class="sig-paren">(</span><em>filename</em>, <em>keys_dictionary</em>, <em>encoding='ascii'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.write_hdr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.io_plugins.mib.write_mib">
+<code class="descclassname">pyxem.io_plugins.mib.</code><code class="descname">write_mib</code><span class="sig-paren">(</span><em>filename</em>, <em>signal</em>, <em>record_by</em><span class="sig-paren">)</span><a class="headerlink" href="#pyxem.io_plugins.mib.write_mib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the raw file object</p>
+<dl class="simple">
+<dt>filename<span class="classifier">string</span></dt><dd><p>the filename, either with the extension or without it</p>
+</dd>
+<dt>record_by<span class="classifier">string</span></dt><dd><p>‘vector’ or ‘image’</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyxem.io_plugins">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyxem.io_plugins" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyxem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Duncan Johnstone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pyxem.io_plugins.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
