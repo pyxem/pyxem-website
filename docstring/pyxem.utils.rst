@@ -12,6 +12,14 @@ pyxem.utils.atomic\_scattering\_params module
     :undoc-members:
     :show-inheritance:
 
+pyxem.utils.calibration\_utils module
+-------------------------------------
+
+.. automodule:: pyxem.utils.calibration_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyxem.utils.expt\_utils module
 ------------------------------
 
