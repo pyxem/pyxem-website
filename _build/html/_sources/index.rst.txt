@@ -82,15 +82,15 @@ To get started using pyxem, especially if you are unfamiliar with python, we rec
 Documentation
 -------------
 
-`Documentation <http://pyxem.github.io/pyxem/pyxem>`__ was formerly available for all pyxem modules at the following links:
+`Documentation <http://pyxem.github.io/pyxem/pyxem>`__ is available for all pyxem modules at the following links:
 
-- `pyxem.signals <http://pyxem.github.io/pyxem/pyxem.signals>`__ - for manipulating raw data and analysis results.
+- `pyxem.signals <http://pyxem.github.io/pyxem-website/docstring/_build/html/pyxem.signals>`__ - for manipulating raw data and analysis results.
 
-- `pyxem.generators <http://pyxem.github.io/pyxem/pyxem.generators>`__ - for establishing simulation and analysis conditions.
+- `pyxem.generators <http://pyxem.github.io/pyxem-website/docstring/_build/html/pyxem.generators>`__ - for establishing simulation and analysis conditions.
 
-- `pyxem.components <http://pyxem.github.io/pyxem/pyxem.components>`__ - for fitting in model based analyses.
+- `pyxem.components <http://pyxem.github.io/pyxem-website/docstring/_build/html/pyxem.components>`__ - for fitting in model based analyses.
 
-- `pyxem.libraries <http://pyxem.github.io/pyxem/pyxem.libraries>`__ - that store simulation results needed for analysis.
+- `pyxem.libraries <http://pyxem.github.io/pyxem-website/docstring/_build/html/pyxem.libraries>`__ - that store simulation results needed for analysis.
 
 
 Questions
