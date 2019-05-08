@@ -4,6 +4,14 @@ pyxem.tests.test\_generators package
 Submodules
 ----------
 
+pyxem.tests.test\_generators.test\_calibration\_generator module
+----------------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_generators.test_calibration_generator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyxem.tests.test\_generators.test\_diffraction\_generator module
 ----------------------------------------------------------------
 

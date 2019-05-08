@@ -4,6 +4,14 @@ pyxem.tests.test\_utils package
 Submodules
 ----------
 
+pyxem.tests.test\_utils.test\_calibration\_utils module
+-------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_utils.test_calibration_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyxem.tests.test\_utils.test\_expt\_utils module
 ------------------------------------------------
 

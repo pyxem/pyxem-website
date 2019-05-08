@@ -4,6 +4,14 @@ pyxem.generators package
 Submodules
 ----------
 
+pyxem.generators.calibration\_generator module
+----------------------------------------------
+
+.. automodule:: pyxem.generators.calibration_generator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyxem.generators.diffraction\_generator module
 ----------------------------------------------
 
