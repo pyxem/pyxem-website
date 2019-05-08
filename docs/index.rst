@@ -12,6 +12,7 @@
     literature
     conventions
     contributing
+    pyxem.signals
 
 
 .. figure:: images/forkme_right_orange_ff7600.png
