@@ -5,7 +5,8 @@ install:
 
 script:
     - make html
-      #- sphinx-apidoc -fo docstrings pyxem #do locally    
+    - mv _build/html/*.html .
+     #- sphinx-apidoc -fo docstrings pyxem #do locally    
 deploy:
   provider: pages
   skip_cleanup: true
