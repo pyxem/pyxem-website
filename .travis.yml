@@ -4,9 +4,10 @@ install:
   - pip install -r requirements.txt
 
 script:
-    - make html
-    - mv _build/html/* .
-     #- sphinx-apidoc -fo docstrings pyxem #do locally    
+    - make html #this takes the .rst files in docs and turns them into html files
+    - mv _build/html/* . # see PR #16              
+    #- sphinx-apidoc -fo docstrings pyxem #do locally  
+    - mv docstring/_build/html/* ./docstring # see PR #16   
 deploy:
   provider: pages
   skip_cleanup: true
