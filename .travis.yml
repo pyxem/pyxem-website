@@ -5,7 +5,7 @@ install:
 
 script:
     - make html
-    - mv _build/* .
+    - mv _build/html/* .
      #- sphinx-apidoc -fo docstrings pyxem #do locally    
 deploy:
   provider: pages
