@@ -102,8 +102,6 @@ We prefer if you let us know by `raising an issue <https://github.com/pyxem/pyxe
 on our Github page so that we can answer in "public" and potentially help someone else who has
 the same question. You can also e-mail the development team via: pyxem.team@gmail.com
 
-Answers may sometimes also be found in our `documentation <http://pyxem.github.io/pyxem/pyxem>`__.
-
 
 Contributing and Feature Requests
 ---------------------------------
