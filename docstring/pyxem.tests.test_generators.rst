@@ -12,14 +12,6 @@ pyxem.tests.test\_generators.test\_calibration\_generator module
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_generators.test\_diffraction\_generator module
-----------------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_generators.test_diffraction_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 pyxem.tests.test\_generators.test\_displacement\_gradient\_tensor\_generator module
 -----------------------------------------------------------------------------------
 
@@ -32,22 +24,6 @@ pyxem.tests.test\_generators.test\_indexation\_generator module
 ---------------------------------------------------------------
 
 .. automodule:: pyxem.tests.test_generators.test_indexation_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.tests.test\_generators.test\_library\_generator module
-------------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_generators.test_library_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.tests.test\_generators.test\_structure\_library\_generator module
------------------------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_generators.test_structure_library_generator
     :members:
     :undoc-members:
     :show-inheritance:

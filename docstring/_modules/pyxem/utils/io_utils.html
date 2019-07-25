@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.utils.io_utils &#8212; pyXem 0.9.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          pyXem</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for pyxem.utils.io_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2017-2019 The pyXem developers</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of pyXem.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with pyXem.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="c1"># a lot of stuff depends on this, so we have to create it first</span>
+
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">hyperspy.io</span> <span class="k">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">hyperspyload</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction1d</span> <span class="k">import</span> <span class="n">Diffraction1D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction2d</span> <span class="k">import</span> <span class="n">Diffraction2D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.electron_diffraction1d</span> <span class="k">import</span> <span class="n">ElectronDiffraction1D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.electron_diffraction2d</span> <span class="k">import</span> <span class="n">ElectronDiffraction2D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.vdf_image</span> <span class="k">import</span> <span class="n">VDFImage</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.crystallographic_map</span> <span class="k">import</span> <span class="n">CrystallographicMap</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction_vectors</span> <span class="k">import</span> <span class="n">DiffractionVectors</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.indexation_results</span> <span class="k">import</span> <span class="n">TemplateMatchingResults</span>
+
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction1d</span> <span class="k">import</span> <span class="n">LazyDiffraction1D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction2d</span> <span class="k">import</span> <span class="n">LazyDiffraction2D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.electron_diffraction1d</span> <span class="k">import</span> <span class="n">LazyElectronDiffraction1D</span>
+<span class="kn">from</span> <span class="nn">pyxem.signals.electron_diffraction2d</span> <span class="k">import</span> <span class="n">LazyElectronDiffraction2D</span>
+
+<span class="kn">from</span> <span class="nn">pyxem.io_plugins</span> <span class="k">import</span> <span class="n">io_plugins</span><span class="p">,</span> <span class="n">default_write_ext</span>
+<span class="kn">from</span> <span class="nn">pyxem.io_plugins</span> <span class="k">import</span> <span class="n">mib</span> <span class="k">as</span> <span class="n">mib_reader</span>
+
+<span class="n">signal_dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;diffraction1d&#39;</span><span class="p">:</span> <span class="n">Diffraction1D</span><span class="p">,</span>
+                     <span class="s1">&#39;diffraction2d&#39;</span><span class="p">:</span> <span class="n">Diffraction2D</span><span class="p">,</span>
+                     <span class="s1">&#39;electron_diffraction1d&#39;</span><span class="p">:</span> <span class="n">ElectronDiffraction1D</span><span class="p">,</span>
+                     <span class="s1">&#39;electron_diffraction2d&#39;</span><span class="p">:</span> <span class="n">ElectronDiffraction2D</span><span class="p">,</span>
+                     <span class="s1">&#39;vdf_image&#39;</span><span class="p">:</span> <span class="n">VDFImage</span><span class="p">,</span>
+                     <span class="s1">&#39;template_matching&#39;</span><span class="p">:</span> <span class="n">TemplateMatchingResults</span><span class="p">,</span>
+                     <span class="s1">&#39;diffraction_vectors&#39;</span><span class="p">:</span> <span class="n">DiffractionVectors</span><span class="p">,</span>
+                     <span class="s1">&#39;crystallographic_map&#39;</span><span class="p">:</span> <span class="n">CrystallographicMap</span><span class="p">}</span>
+
+<span class="n">lazy_signal_dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;diffraction1d&#39;</span><span class="p">:</span> <span class="n">LazyDiffraction1D</span><span class="p">,</span>
+                          <span class="s1">&#39;diffraction2d&#39;</span><span class="p">:</span> <span class="n">LazyDiffraction2D</span><span class="p">,</span>
+                          <span class="s1">&#39;electron_diffraction1d&#39;</span><span class="p">:</span> <span class="n">LazyElectronDiffraction1D</span><span class="p">,</span>
+                          <span class="s1">&#39;electron_diffraction2d&#39;</span><span class="p">:</span> <span class="n">LazyElectronDiffraction2D</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.io_utils.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load data into pyxem objects.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        A single filename of a previously saved pyxem object. Other arguments may</span>
+<span class="sd">        succeed, but will have fallen back on hyperspy load and warn accordingly</span>
+<span class="sd">    lazy : bool</span>
+<span class="sd">        If True the file will be opened lazily, i.e. without actually reading</span>
+<span class="sd">        the data from the disk until required. Allows datasets much larger than</span>
+<span class="sd">        available memory to be loaded.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    s : Signal</span>
+<span class="sd">        A pyxem Signal object containing loaded data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">hyperspyload</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="n">lazy</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lazy</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">lazy_signal_dictionary</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">signal_type</span><span class="p">](</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid signal_type in saved data for pyxem, &quot;</span>
+                             <span class="s2">&quot;please use load_hspy for this data. &quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">signal_dictionary</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">signal_type</span><span class="p">](</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid signal_type in saved data for pyxem, &quot;</span>
+                             <span class="s2">&quot;please use load_hspy for this data. &quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="load_hspy"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.io_utils.load_hspy">[docs]</a><span class="k">def</span> <span class="nf">load_hspy</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">assign_to</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wraps hyperspy.load to load various file formats and assigns suitable</span>
+<span class="sd">    loaded data to user specified pyxem signals.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        A single filename of a previously saved pyxem object. Other arguments may</span>
+<span class="sd">        succeed, but will have fallen back on hyperspy load and warn accordingly</span>
+<span class="sd">    lazy : bool</span>
+<span class="sd">        If True the file will be opened lazily, i.e. without actually reading</span>
+<span class="sd">        the data from the disk until required. Allows datasets much larger than</span>
+<span class="sd">        available memory to be loaded.</span>
+<span class="sd">    assign_to : str</span>
+<span class="sd">        The signal class type the loaded data should be assigned to. If None,</span>
+<span class="sd">        follows default hyperspy behaviour.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    s : Signal</span>
+<span class="sd">        A pyxem Signal object containing loaded data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">hyperspyload</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="n">lazy</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">assign_to</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lazy</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">lazy_signal_dictionary</span><span class="p">[</span><span class="n">assign_to</span><span class="p">](</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid value of assign_to for lazy loading &quot;</span>
+                                 <span class="s2">&quot;please specify a lazy pyXem signal or None. &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">signal_dictionary</span><span class="p">[</span><span class="n">assign_to</span><span class="p">](</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid value of assign_to for loading &quot;</span>
+                                 <span class="s2">&quot;please specify a pyXem signal or None. &quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="load_mib"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.io_utils.load_mib">[docs]</a><span class="k">def</span> <span class="nf">load_mib</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scan_size</span><span class="p">,</span> <span class="n">sum_length</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+    <span class="sd">&quot;&quot;&quot;Load a medipix hdr/mib file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : string</span>
+<span class="sd">        File path and name to .hdr file.</span>
+<span class="sd">    scan_size : int</span>
+<span class="sd">        Scan size in pixels, allows the function to reshape the array into</span>
+<span class="sd">        the right shape.</span>
+<span class="sd">    sum_length : int</span>
+<span class="sd">        Number of lines to sum over to determine scan fly back location.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dpt</span> <span class="o">=</span> <span class="n">load_with_reader</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="n">mib_reader</span><span class="p">)</span>
+    <span class="n">dpt</span> <span class="o">=</span> <span class="n">ElectronDiffraction2D</span><span class="p">(</span><span class="n">dpt</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">scan_size</span><span class="p">,</span> <span class="n">scan_size</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)))</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">dpt</span><span class="o">.</span><span class="n">inav</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">sum_length</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">data</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">edge</span> <span class="o">==</span> <span class="n">scan_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">ElectronDiffraction2D</span><span class="p">(</span><span class="n">dpt</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">edge</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">ElectronDiffraction2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">dpt</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="n">edge</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:],</span>
+                                                 <span class="n">dpt</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">edge</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">dp</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dp</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

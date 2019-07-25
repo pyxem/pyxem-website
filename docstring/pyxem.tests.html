@@ -2,17 +2,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyxem.tests package &#8212; pyXem 0.8.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>pyxem.tests package &#8212; pyXem 0.9.0 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           pyXem</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.8.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -67,8 +67,8 @@
 <li><a class="reference internal" href="#">pyxem.tests package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#pyxem-tests-conftest-module">pyxem.tests.conftest module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-pyxem.tests.conftest">pyxem.tests.conftest module</a></li>
+<li><a class="reference internal" href="#module-pyxem.tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -112,64 +112,63 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_components.html">pyxem.tests.test_components package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#pyxem-tests-test-components-test-diffraction-component-module">pyxem.tests.test_components.test_diffraction_component module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#pyxem-tests-test-components-test-scalable-reference-pattern-module">pyxem.tests.test_components.test_scalable_reference_pattern module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#module-pyxem.tests.test_components.test_diffraction_component">pyxem.tests.test_components.test_diffraction_component module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#module-pyxem.tests.test_components.test_scalable_reference_pattern">pyxem.tests.test_components.test_scalable_reference_pattern module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_components.html#module-pyxem.tests.test_components">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_generators.html">pyxem.tests.test_generators package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-calibration-generator-module">pyxem.tests.test_generators.test_calibration_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-diffraction-generator-module">pyxem.tests.test_generators.test_diffraction_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-displacement-gradient-tensor-generator-module">pyxem.tests.test_generators.test_displacement_gradient_tensor_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-indexation-generator-module">pyxem.tests.test_generators.test_indexation_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-library-generator-module">pyxem.tests.test_generators.test_library_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-structure-library-generator-module">pyxem.tests.test_generators.test_structure_library_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-subpixelrefinement-generator-module">pyxem.tests.test_generators.test_subpixelrefinement_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#pyxem-tests-test-generators-test-vdf-generator-module">pyxem.tests.test_generators.test_vdf_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators.test_calibration_generator">pyxem.tests.test_generators.test_calibration_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators.test_displacement_gradient_tensor_generator">pyxem.tests.test_generators.test_displacement_gradient_tensor_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators.test_indexation_generator">pyxem.tests.test_generators.test_indexation_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators.test_subpixelrefinement_generator">pyxem.tests.test_generators.test_subpixelrefinement_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators.test_vdf_generator">pyxem.tests.test_generators.test_vdf_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_generators.html#module-pyxem.tests.test_generators">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_library.html">pyxem.tests.test_library package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-calibration-library-module">pyxem.tests.test_library.test_calibration_library module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-diffraction-library-module">pyxem.tests.test_library.test_diffraction_library module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-structure-library-module">pyxem.tests.test_library.test_structure_library module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#pyxem-tests-test-library-test-vector-library-module">pyxem.tests.test_library.test_vector_library module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#module-pyxem.tests.test_library.test_calibration_library">pyxem.tests.test_library.test_calibration_library module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_library.html#module-pyxem.tests.test_library">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_physical.html">pyxem.tests.test_physical package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-marker-plotting-module">pyxem.tests.test_physical.test_marker_plotting module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-orientation-mapping-nonphys-module">pyxem.tests.test_physical.test_orientation_mapping_nonphys module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-orientation-mapping-phys-module">pyxem.tests.test_physical.test_orientation_mapping_phys module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#pyxem-tests-test-physical-test-strain-mapping-module">pyxem.tests.test_physical.test_strain_mapping module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical.test_marker_plotting">pyxem.tests.test_physical.test_marker_plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical.test_orientation_mapping_nonphys">pyxem.tests.test_physical.test_orientation_mapping_nonphys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical.test_orientation_mapping_phys">pyxem.tests.test_physical.test_orientation_mapping_phys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical.test_strain_mapping">pyxem.tests.test_physical.test_strain_mapping module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_physical.html#module-pyxem.tests.test_physical">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_signals.html">pyxem.tests.test_signals package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-crystallographic-map-module">pyxem.tests.test_signals.test_crystallographic_map module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-profile-module">pyxem.tests.test_signals.test_diffraction_profile module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-simulation-module">pyxem.tests.test_signals.test_diffraction_simulation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-diffraction-vectors-module">pyxem.tests.test_signals.test_diffraction_vectors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-electron-diffraction-module">pyxem.tests.test_signals.test_electron_diffraction module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-indexation-results-module">pyxem.tests.test_signals.test_indexation_results module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#pyxem-tests-test-signals-test-tensor-field-module">pyxem.tests.test_signals.test_tensor_field module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_crystallographic_map">pyxem.tests.test_signals.test_crystallographic_map module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_diffraction1d">pyxem.tests.test_signals.test_diffraction1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_diffraction2d">pyxem.tests.test_signals.test_diffraction2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_diffraction_vectors">pyxem.tests.test_signals.test_diffraction_vectors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_electron_diffraction1d">pyxem.tests.test_signals.test_electron_diffraction1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_electron_diffraction2d">pyxem.tests.test_signals.test_electron_diffraction2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_indexation_results">pyxem.tests.test_signals.test_indexation_results module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_lazy_diffraction1d">pyxem.tests.test_signals.test_lazy_diffraction1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_lazy_diffraction2d">pyxem.tests.test_signals.test_lazy_diffraction2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_lazy_electron_diffraction1d">pyxem.tests.test_signals.test_lazy_electron_diffraction1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_lazy_electron_diffraction2d">pyxem.tests.test_signals.test_lazy_electron_diffraction2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals.test_tensor_field">pyxem.tests.test_signals.test_tensor_field module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_signals.html#module-pyxem.tests.test_signals">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyxem.tests.test_utils.html">pyxem.tests.test_utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-calibration-utils-module">pyxem.tests.test_utils.test_calibration_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-expt-utils-module">pyxem.tests.test_utils.test_expt_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-indexation-utils-module">pyxem.tests.test_utils.test_indexation_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-peakfinders2d-module">pyxem.tests.test_utils.test_peakfinders2D module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-sim-utils-module">pyxem.tests.test_utils.test_sim_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-subpixel-utils-module">pyxem.tests.test_utils.test_subpixel_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#pyxem-tests-test-utils-test-vector-utils-module">pyxem.tests.test_utils.test_vector_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_calibration_utils">pyxem.tests.test_utils.test_calibration_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_expt_utils">pyxem.tests.test_utils.test_expt_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_indexation_utils">pyxem.tests.test_utils.test_indexation_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_io_utils">pyxem.tests.test_utils.test_io_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_peakfinders2D">pyxem.tests.test_utils.test_peakfinders2D module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_subpixel_utils">pyxem.tests.test_utils.test_subpixel_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils.test_vector_utils">pyxem.tests.test_utils.test_vector_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyxem.tests.test_utils.html#module-pyxem.tests.test_utils">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -178,11 +177,66 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pyxem-tests-conftest-module">
-<h2>pyxem.tests.conftest module<a class="headerlink" href="#pyxem-tests-conftest-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyxem.tests.conftest">
+<span id="pyxem-tests-conftest-module"></span><h2>pyxem.tests.conftest module<a class="headerlink" href="#module-pyxem.tests.conftest" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyxem.tests.conftest.default_structure">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">default_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#default_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.default_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>An atomic structure represetned using diffpy</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.diffraction_pattern">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">diffraction_pattern</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#diffraction_pattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.diffraction_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple, multiuse diffraction pattern, with dimensions:
+ElectronDiffraction2D &lt;2,2|8,8&gt;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.dp_template_match_result">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">dp_template_match_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#dp_template_match_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.dp_template_match_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.dp_vector_match_result">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">dp_vector_match_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#dp_vector_match_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.dp_vector_match_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.electron_diffraction1d">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">electron_diffraction1d</code><span class="sig-paren">(</span><em>diffraction_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#electron_diffraction1d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.electron_diffraction1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple, multiuse diffraction profile, with dimensions:
+ElectronDiffraction1D &lt;2,2|12&gt;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.sp_template_match_result">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">sp_template_match_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#sp_template_match_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.sp_template_match_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.sp_vector_match_result">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">sp_vector_match_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#sp_vector_match_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.sp_vector_match_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.vector_library">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">vector_library</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#vector_library"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.vector_library" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.vector_match_peaks">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">vector_match_peaks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#vector_match_peaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.vector_match_peaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyxem.tests.conftest.z">
+<code class="descclassname">pyxem.tests.conftest.</code><code class="descname">z</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyxem/tests/conftest.html#z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyxem.tests.conftest.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyxem.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyxem.tests" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -199,7 +253,7 @@
     </p>
     <p>
         &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>

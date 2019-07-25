@@ -12,18 +12,18 @@ pyxem.signals.crystallographic\_map module
     :undoc-members:
     :show-inheritance:
 
-pyxem.signals.diffraction\_profile module
------------------------------------------
+pyxem.signals.diffraction1d module
+----------------------------------
 
-.. automodule:: pyxem.signals.diffraction_profile
+.. automodule:: pyxem.signals.diffraction1d
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyxem.signals.diffraction\_simulation module
---------------------------------------------
+pyxem.signals.diffraction2d module
+----------------------------------
 
-.. automodule:: pyxem.signals.diffraction_simulation
+.. automodule:: pyxem.signals.diffraction2d
     :members:
     :undoc-members:
     :show-inheritance:
@@ -36,10 +36,18 @@ pyxem.signals.diffraction\_vectors module
     :undoc-members:
     :show-inheritance:
 
-pyxem.signals.electron\_diffraction module
-------------------------------------------
+pyxem.signals.electron\_diffraction1d module
+--------------------------------------------
 
-.. automodule:: pyxem.signals.electron_diffraction
+.. automodule:: pyxem.signals.electron_diffraction1d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.signals.electron\_diffraction2d module
+--------------------------------------------
+
+.. automodule:: pyxem.signals.electron_diffraction2d
     :members:
     :undoc-members:
     :show-inheritance:

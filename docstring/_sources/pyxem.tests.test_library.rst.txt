@@ -12,30 +12,6 @@ pyxem.tests.test\_library.test\_calibration\_library module
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_library.test\_diffraction\_library module
------------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_library.test_diffraction_library
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.tests.test\_library.test\_structure\_library module
----------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_library.test_structure_library
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.tests.test\_library.test\_vector\_library module
-------------------------------------------------------
-
-.. automodule:: pyxem.tests.test_library.test_vector_library
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------
