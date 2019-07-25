@@ -2,17 +2,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyxem.utils.peakfinders2D &#8212; pyXem 0.8.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>pyxem.utils.peakfinders2D &#8212; pyXem 0.9.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           pyXem</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.8.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -97,7 +97,7 @@
       
   <h1>Source code for pyxem.utils.peakfinders2D</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2017-2018 The pyXem developers</span>
+<span class="c1"># Copyright 2017-2019 The pyXem developers</span>
 <span class="c1">#</span>
 <span class="c1"># This file is part of pyXem.</span>
 <span class="c1">#</span>
@@ -116,12 +116,28 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">ndi</span>
-<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="k">import</span> <span class="n">match_template</span><span class="p">,</span> <span class="n">peak_local_max</span>
+<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="k">import</span> <span class="n">match_template</span><span class="p">,</span> <span class="n">corner_peaks</span>
 
-<span class="n">NO_PEAKS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]]])</span>
+<span class="n">NO_PEAKS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]])</span>
 
 
 <div class="viewcode-block" id="clean_peaks"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.peakfinders2D.clean_peaks">[docs]</a><span class="k">def</span> <span class="nf">clean_peaks</span><span class="p">(</span><span class="n">peaks</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function to deal with no peaks being found.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    peaks : numpy.ndarray</span>
+<span class="sd">        Result of peak finding</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    peaks : numpy.ndarray</span>
+<span class="sd">        Result of peak finding</span>
+
+<span class="sd">    NO_PEAKS : string</span>
+<span class="sd">        Flag indicating no peaks found.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">NO_PEAKS</span>
     <span class="k">else</span><span class="p">:</span>
@@ -346,7 +362,7 @@
 
 
 <div class="viewcode-block" id="find_peaks_dog"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.peakfinders2D.find_peaks_dog">[docs]</a><span class="k">def</span> <span class="nf">find_peaks_dog</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">min_sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mf">50.</span><span class="p">,</span> <span class="n">sigma_ratio</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span>
-                   <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+                   <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">exclude_border</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Finds peaks via the difference of Gaussian Matrices method from</span>
 <span class="sd">    `scikit-image`.</span>
@@ -382,7 +398,7 @@
 
 
 <div class="viewcode-block" id="find_peaks_log"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.peakfinders2D.find_peaks_log">[docs]</a><span class="k">def</span> <span class="nf">find_peaks_log</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">min_sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mf">50.</span><span class="p">,</span> <span class="n">num_sigma</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span>
-                   <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                   <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">exclude_border</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Finds peaks via the Laplacian of Gaussian Matrices method from</span>
 <span class="sd">    `scikit-image`.</span>
@@ -437,9 +453,9 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">response_image</span> <span class="o">=</span> <span class="n">match_template</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">disc_image</span><span class="p">,</span> <span class="n">pad_input</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">peaks</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span><span class="n">response_image</span><span class="p">,</span>
-                           <span class="n">min_distance</span><span class="o">=</span><span class="n">min_distance</span><span class="p">,</span>
-                           <span class="n">threshold_rel</span><span class="o">=</span><span class="n">peak_threshold</span><span class="p">)</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">corner_peaks</span><span class="p">(</span><span class="n">response_image</span><span class="p">,</span>
+                         <span class="n">min_distance</span><span class="o">=</span><span class="n">min_distance</span><span class="p">,</span>
+                         <span class="n">threshold_rel</span><span class="o">=</span><span class="n">peak_threshold</span><span class="p">)</span>
     <span class="c1"># make return format the same as the other peak finders</span>
     <span class="n">peaks</span> <span class="o">-=</span> <span class="mi">1</span>
 
@@ -458,7 +474,7 @@
     </p>
     <p>
         &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>

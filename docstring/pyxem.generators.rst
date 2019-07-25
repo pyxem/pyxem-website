@@ -12,14 +12,6 @@ pyxem.generators.calibration\_generator module
     :undoc-members:
     :show-inheritance:
 
-pyxem.generators.diffraction\_generator module
-----------------------------------------------
-
-.. automodule:: pyxem.generators.diffraction_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 pyxem.generators.displacement\_gradient\_tensor\_generator module
 -----------------------------------------------------------------
 
@@ -32,22 +24,6 @@ pyxem.generators.indexation\_generator module
 ---------------------------------------------
 
 .. automodule:: pyxem.generators.indexation_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.generators.library\_generator module
-------------------------------------------
-
-.. automodule:: pyxem.generators.library_generator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.generators.structure\_library\_generator module
------------------------------------------------------
-
-.. automodule:: pyxem.generators.structure_library_generator
     :members:
     :undoc-members:
     :show-inheritance:

@@ -2,17 +2,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyxem.generators.subpixelrefinement_generator &#8212; pyXem 0.8.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>pyxem.generators.subpixelrefinement_generator &#8212; pyXem 0.9.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           pyXem</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.8.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -97,7 +97,7 @@
       
   <h1>Source code for pyxem.generators.subpixelrefinement_generator</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2017-2018 The pyXem developers</span>
+<span class="c1"># Copyright 2017-2019 The pyXem developers</span>
 <span class="c1">#</span>
 <span class="c1"># This file is part of pyXem.</span>
 <span class="c1">#</span>
@@ -115,26 +115,33 @@
 <span class="c1"># along with pyXem.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Generating subpixel resolution on diffraction vectors</span>
+<span class="sd">Generating subpixel resolution on diffraction vectors.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pyxem.utils.subpixel_refinements_utils</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">pyxem.utils.subpixel_refinements_utils</span> <span class="k">import</span> <span class="n">_conventional_xc</span>
+
+<span class="kn">from</span> <span class="nn">pyxem.signals.diffraction_vectors</span> <span class="k">import</span> <span class="n">DiffractionVectors</span>
 <span class="kn">from</span> <span class="nn">pyxem.utils.expt_utils</span> <span class="k">import</span> <span class="n">peaks_as_gvectors</span>
-<span class="kn">from</span> <span class="nn">scipy.ndimage.measurements</span> <span class="k">import</span> <span class="n">center_of_mass</span>
+<span class="kn">from</span> <span class="nn">pyxem.utils.subpixel_refinements_utils</span> <span class="k">import</span> <span class="n">_conventional_xc</span>
+<span class="kn">from</span> <span class="nn">pyxem.utils.subpixel_refinements_utils</span> <span class="k">import</span> <span class="n">get_experimental_square</span>
+<span class="kn">from</span> <span class="nn">pyxem.utils.subpixel_refinements_utils</span> <span class="k">import</span> <span class="n">get_simulated_disc</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 
 <div class="viewcode-block" id="SubpixelrefinementGenerator"><a class="viewcode-back" href="../../../pyxem.generators.html#pyxem.generators.subpixelrefinement_generator.SubpixelrefinementGenerator">[docs]</a><span class="k">class</span> <span class="nc">SubpixelrefinementGenerator</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates subpixel refinement of DiffractionVectors through a range of methods.</span>
+    <span class="sd">&quot;&quot;&quot;Generates subpixel refinement of DiffractionVectors.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    dp : ElectronDiffraction</span>
+<span class="sd">    dp : ElectronDiffraction2D</span>
 <span class="sd">        The electron diffraction patterns to be refined</span>
-<span class="sd">    vectors : numpy.array()</span>
-<span class="sd">        An array containing the vectors (in calibrated units) to the locations of the spots to be refined</span>
+<span class="sd">    vectors : DiffractionVectors | ndarray</span>
+<span class="sd">        Vectors (in calibrated units) to the locations of the spots to be</span>
+<span class="sd">        refined. If given as DiffractionVectors, it must have the same</span>
+<span class="sd">        navigation shape as the electron diffraction patterns. If an ndarray,</span>
+<span class="sd">        the same set of vectors is mapped over all electron diffraction</span>
+<span class="sd">        patterns.</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
@@ -146,19 +153,42 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dp</span> <span class="o">=</span> <span class="n">dp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span> <span class="o">=</span> <span class="n">vectors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_method</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># this hard codes the squareness of patterns</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_pixels</span> <span class="o">=</span> <span class="p">((</span><span class="n">vectors</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">sig_ax</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span> <span class="o">=</span> <span class="p">[</span><span class="n">sig_ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">sig_ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="n">sig_ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sig_ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">_floor</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">calibration</span><span class="p">,</span> <span class="n">center</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">vectors</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">vectors</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">:</span>
+                <span class="n">vectors</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">vectors</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">/</span> <span class="n">calibration</span><span class="p">)</span> <span class="o">+</span> <span class="n">center</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">DiffractionVectors</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">vectors</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">navigation_shape</span> <span class="o">!=</span> <span class="n">dp</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">navigation_shape</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Vectors with shape </span><span class="si">{}</span><span class="s1"> must have the same navigation shape &#39;</span>
+                                 <span class="s1">&#39;as the diffraction patterns which has shape </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                     <span class="n">vectors</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">navigation_shape</span><span class="p">,</span> <span class="n">dp</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">navigation_shape</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span> <span class="o">=</span> <span class="n">vectors</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_floor</span><span class="p">,</span>
+                                             <span class="n">calibration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">,</span>
+                                             <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                                             <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span> <span class="o">=</span> <span class="n">_floor</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span> <span class="n">DiffractionVectors</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Some of your vectors do not lie within your diffraction pattern, check your calibration&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Some of your vectors do not lie within your diffraction pattern, check your calibration&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SubpixelrefinementGenerator.conventional_xc"><a class="viewcode-back" href="../../../pyxem.generators.html#pyxem.generators.subpixelrefinement_generator.SubpixelrefinementGenerator.conventional_xc">[docs]</a>    <span class="k">def</span> <span class="nf">conventional_xc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">square_size</span><span class="p">,</span> <span class="n">disc_radius</span><span class="p">,</span> <span class="n">upsample_factor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Refines the peaks using a conventional form of (phase) cross correlation</span>
+        <span class="sd">&quot;&quot;&quot;Refines the peaks using (phase) cross correlation.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        square_size : int</span>
-<span class="sd">            Length (in pixels) of one side of a square the contains the peak to be refined</span>
+<span class="sd">            Length (in pixels) of one side of a square the contains the peak to</span>
+<span class="sd">            be refined.</span>
 <span class="sd">        disc_radius:  int</span>
 <span class="sd">            Radius (in pixels) of the discs that you seek to refine</span>
 <span class="sd">        upsample_factor: int</span>
@@ -166,54 +196,52 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        vector_out: np.array()</span>
-<span class="sd">            array containing the refined vectors in calibrated units</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">sim_disc</span> <span class="o">=</span> <span class="n">get_simulated_disc</span><span class="p">(</span><span class="n">square_size</span><span class="p">,</span> <span class="n">disc_radius</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="p">)):</span>
-            <span class="n">vect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectors_pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">expt_disc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-                <span class="n">get_experimental_square</span><span class="p">,</span>
-                <span class="n">vector</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span>
-                <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">,</span>
-                <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">shifts</span> <span class="o">=</span> <span class="n">expt_disc</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-                <span class="n">_conventional_xc</span><span class="p">,</span>
-                <span class="n">sim_disc</span><span class="o">=</span><span class="n">sim_disc</span><span class="p">,</span>
-                <span class="n">upsample_factor</span><span class="o">=</span><span class="n">upsample_factor</span><span class="p">,</span>
-                <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(((</span><span class="n">vect</span> <span class="o">+</span> <span class="n">shifts</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">)</span>
+<span class="sd">        vector_out: DiffractionVectors</span>
+<span class="sd">            DiffractionVectors containing the refined vectors in calibrated</span>
+<span class="sd">            units with the same navigation shape as the diffraction patterns.</span>
 
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">_conventional_xc_map</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">sim_disc</span><span class="p">,</span> <span class="n">upsample_factor</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">calibration</span><span class="p">):</span>
+            <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vectors</span><span class="p">):</span>
+                <span class="n">expt_disc</span> <span class="o">=</span> <span class="n">get_experimental_square</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="p">)</span>
+                <span class="n">shifts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_conventional_xc</span><span class="p">(</span><span class="n">expt_disc</span><span class="p">,</span> <span class="n">sim_disc</span><span class="p">,</span> <span class="n">upsample_factor</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(((</span><span class="n">vectors</span> <span class="o">+</span> <span class="n">shifts</span><span class="p">)</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">*</span> <span class="n">calibration</span><span class="p">)</span>
+
+        <span class="n">sim_disc</span> <span class="o">=</span> <span class="n">get_simulated_disc</span><span class="p">(</span><span class="n">square_size</span><span class="p">,</span> <span class="n">disc_radius</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span> <span class="o">=</span> <span class="n">DiffractionVectors</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_conventional_xc_map</span><span class="p">,</span>
+                        <span class="n">vectors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span>
+                        <span class="n">sim_disc</span><span class="o">=</span><span class="n">sim_disc</span><span class="p">,</span>
+                        <span class="n">upsample_factor</span><span class="o">=</span><span class="n">upsample_factor</span><span class="p">,</span>
+                        <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                        <span class="n">calibration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">,</span>
+                        <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">set_signal_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_method</span> <span class="o">=</span> <span class="s2">&quot;conventional_xc&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span></div>
 
 <div class="viewcode-block" id="SubpixelrefinementGenerator.center_of_mass_method"><a class="viewcode-back" href="../../../pyxem.generators.html#pyxem.generators.subpixelrefinement_generator.SubpixelrefinementGenerator.center_of_mass_method">[docs]</a>    <span class="k">def</span> <span class="nf">center_of_mass_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">square_size</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Find the subpixel refinement of a peak by assuming it lies at the center of intensity</span>
+        <span class="sd">&quot;&quot;&quot;Find the subpixel refinement of a peak by assuming it lies at the</span>
+<span class="sd">        center of intensity.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        square_size : int</span>
-<span class="sd">            Length (in pixels) of one side of a square the contains the peak to be refined</span>
+<span class="sd">            Length (in pixels) of one side of a square the contains the peak to</span>
+<span class="sd">            be refined.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        vector_out: np.array()</span>
-<span class="sd">            array containing the refined vectors in calibrated units</span>
+<span class="sd">        vector_out: DiffractionVectors</span>
+<span class="sd">            DiffractionVectors containing the refined vectors in calibrated</span>
+<span class="sd">            units with the same navigation shape as the diffraction patterns.</span>
 
-<span class="sd">        Notes</span>
-<span class="sd">        -----</span>
-<span class="sd">        This will work poorly on disks with strong dynamic contrast</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">_center_of_mass_hs</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Return the center of mass of an array with coordinates in the hyperspy convention</span>
+            <span class="sd">&quot;&quot;&quot;Return the center of mass of an array with coordinates in the</span>
+<span class="sd">            hyperspy convention</span>
 
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
@@ -225,15 +253,20 @@
 <span class="sd">                The x and y locations of the center of mass of the parsed square</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="n">t</span> <span class="o">=</span> <span class="n">center_of_mass</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">z</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">s</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">cx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+            <span class="n">cy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
 
-        <span class="k">def</span> <span class="nf">_com_experimental_square</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">vector</span><span class="p">,</span><span class="n">square_size</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Wrapper for get_experimental_square that makes the non-zero elements symmetrical</span>
-<span class="sd">            around the &#39;unsubpixeled&#39; peak by zeroing a &#39;spare&#39; row and column (top and left)</span>
+        <span class="k">def</span> <span class="nf">_com_experimental_square</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Wrapper for get_experimental_square that makes the non-zero</span>
+<span class="sd">            elements symmetrical around the &#39;unsubpixeled&#39; peak by zeroing a</span>
+<span class="sd">            &#39;spare&#39; row and column (top and left).</span>
 
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
@@ -248,27 +281,125 @@
 <span class="sd">            z_adpt : np.array</span>
 <span class="sd">                z, but with row and column zero set to 0</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="n">z_adpt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">get_experimental_square</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">vector</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span><span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">))</span> <span class="c1"># to make sure we don&#39;t change the dp</span>
-            <span class="n">z_adpt</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">z_adpt</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Copy to make sure we don&#39;t change the dp</span>
+            <span class="n">z_adpt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">get_experimental_square</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">))</span>
+            <span class="n">z_adpt</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">z_adpt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">return</span> <span class="n">z_adpt</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vectors_init</span><span class="p">)):</span>
-            <span class="n">vect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectors_pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">expt_disc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-                <span class="n">_com_experimental_square</span><span class="p">,</span>
-                <span class="n">vector</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span>
-                <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">,</span>
-                <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">shifts</span> <span class="o">=</span> <span class="n">expt_disc</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_center_of_mass_hs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">square_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(((</span><span class="n">vect</span> <span class="o">+</span> <span class="n">shifts</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_center_of_mass_map</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">square_size</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">calibration</span><span class="p">):</span>
+            <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vectors</span><span class="p">):</span>
+                <span class="n">expt_disc</span> <span class="o">=</span> <span class="n">_com_experimental_square</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="p">)</span>
+                <span class="n">shifts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="n">square_size</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">_center_of_mass_hs</span><span class="p">(</span><span class="n">expt_disc</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="p">((</span><span class="n">vectors</span> <span class="o">+</span> <span class="n">shifts</span><span class="p">)</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">*</span> <span class="n">calibration</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span> <span class="o">=</span> <span class="n">DiffractionVectors</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_center_of_mass_map</span><span class="p">,</span>
+                        <span class="n">vectors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span>
+                        <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">,</span>
+                        <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                        <span class="n">calibration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">,</span>
+                        <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">set_signal_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">last_method</span> <span class="o">=</span> <span class="s2">&quot;center_of_mass_method&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span></div>
+
+<div class="viewcode-block" id="SubpixelrefinementGenerator.local_gaussian_method"><a class="viewcode-back" href="../../../pyxem.generators.html#pyxem.generators.subpixelrefinement_generator.SubpixelrefinementGenerator.local_gaussian_method">[docs]</a>    <span class="k">def</span> <span class="nf">local_gaussian_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">square_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Refinement based on the mathematics of a local maxima on a</span>
+<span class="sd">        continious region, using the (discrete) maxima pixel as a starting point.</span>
+<span class="sd">        See Notes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        square_size : int</span>
+<span class="sd">            Length (in pixels) of one side of a square the contains the peak to</span>
+<span class="sd">            be refined.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        vector_out : DiffractionVectors</span>
+<span class="sd">            DiffractionVectors containing the refined vectors in calibrated</span>
+<span class="sd">            units with the same navigation shape as the diffraction patterns.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method works by first locating the maximum intenisty value within the square.</span>
+<span class="sd">        The four adjacent pixels are then considered and used to form two independant</span>
+<span class="sd">        quadratic equations. Solving these gives the x_center and y_center coordinates,</span>
+<span class="sd">        which are then returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">_new_lg_idea</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot; Internal function providing the algebra for the local_gaussian_method,</span>
+<span class="sd">            see docstring of that function for details</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            z : np.array</span>
+<span class="sd">                subsquare containing the peak to be localised</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            (x,y) : tuple</span>
+<span class="sd">                Containing subpixel resolved values for the center</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">si</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">z_ref</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">z_ref</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="n">z_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">LX</span><span class="p">,</span> <span class="n">RX</span> <span class="o">=</span> <span class="n">z_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">z_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="n">UY</span><span class="p">,</span> <span class="n">DY</span> <span class="o">=</span> <span class="n">z_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">z_ref</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">x_ans</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">LX</span> <span class="o">-</span> <span class="n">RX</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">LX</span> <span class="o">+</span> <span class="n">RX</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+            <span class="n">y_ans</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">UY</span> <span class="o">-</span> <span class="n">DY</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">UY</span> <span class="o">+</span> <span class="n">DY</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">x_ans</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y_ans</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_lg_map</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">square_size</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">calibration</span><span class="p">):</span>
+            <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vectors</span><span class="p">):</span>
+                <span class="n">expt_disc</span> <span class="o">=</span> <span class="n">get_experimental_square</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="p">)</span>
+                <span class="n">shifts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_new_lg_idea</span><span class="p">(</span><span class="n">expt_disc</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="p">(((</span><span class="n">vectors</span> <span class="o">+</span> <span class="n">shifts</span><span class="p">)</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">*</span> <span class="n">calibration</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span> <span class="o">=</span> <span class="n">DiffractionVectors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_lg_map</span><span class="p">,</span>
+                        <span class="n">vectors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span>
+                        <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">,</span>
+                        <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                        <span class="n">calibration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">calibration</span><span class="p">,</span>
+                        <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+        <span class="c1">#check for unrefined peaks</span>
+        <span class="k">def</span> <span class="nf">check_bad_square</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+            <span class="n">si</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">z_ref</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">si</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">si</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">z_ref</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">def</span> <span class="nf">_check_bad_square_map</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span><span class="n">vectors</span><span class="p">,</span><span class="n">square_size</span><span class="p">):</span>
+                <span class="n">bad_square</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vectors</span><span class="p">):</span>
+                    <span class="n">expt_disc</span> <span class="o">=</span> <span class="n">get_experimental_square</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">square_size</span><span class="p">)</span>
+                    <span class="n">bad_square</span> <span class="o">=</span> <span class="n">check_bad_square</span><span class="p">(</span><span class="n">expt_disc</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">bad_square</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">bad_squares</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_check_bad_square_map</span><span class="p">,</span>
+                                  <span class="n">vectors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_pixels</span><span class="p">,</span>
+                                  <span class="n">square_size</span><span class="o">=</span><span class="n">square_size</span><span class="p">,</span>
+                                  <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">bad_squares</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;You have a peak in your pattern that lies on the edge of the square. </span><span class="se">\</span>
+<span class="s2">                          Consider increasing the square size&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">set_signal_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_method</span> <span class="o">=</span> <span class="s2">&quot;lg_method&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectors_out</span></div></div>
 </pre></div>
 
@@ -284,7 +415,7 @@
     </p>
     <p>
         &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>

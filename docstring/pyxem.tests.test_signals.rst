@@ -12,18 +12,18 @@ pyxem.tests.test\_signals.test\_crystallographic\_map module
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_signals.test\_diffraction\_profile module
------------------------------------------------------------
+pyxem.tests.test\_signals.test\_diffraction1d module
+----------------------------------------------------
 
-.. automodule:: pyxem.tests.test_signals.test_diffraction_profile
+.. automodule:: pyxem.tests.test_signals.test_diffraction1d
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_signals.test\_diffraction\_simulation module
---------------------------------------------------------------
+pyxem.tests.test\_signals.test\_diffraction2d module
+----------------------------------------------------
 
-.. automodule:: pyxem.tests.test_signals.test_diffraction_simulation
+.. automodule:: pyxem.tests.test_signals.test_diffraction2d
     :members:
     :undoc-members:
     :show-inheritance:
@@ -36,10 +36,18 @@ pyxem.tests.test\_signals.test\_diffraction\_vectors module
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_signals.test\_electron\_diffraction module
-------------------------------------------------------------
+pyxem.tests.test\_signals.test\_electron\_diffraction1d module
+--------------------------------------------------------------
 
-.. automodule:: pyxem.tests.test_signals.test_electron_diffraction
+.. automodule:: pyxem.tests.test_signals.test_electron_diffraction1d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.tests.test\_signals.test\_electron\_diffraction2d module
+--------------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_signals.test_electron_diffraction2d
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,6 +56,38 @@ pyxem.tests.test\_signals.test\_indexation\_results module
 ----------------------------------------------------------
 
 .. automodule:: pyxem.tests.test_signals.test_indexation_results
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.tests.test\_signals.test\_lazy\_diffraction1d module
+----------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_signals.test_lazy_diffraction1d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.tests.test\_signals.test\_lazy\_diffraction2d module
+----------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_signals.test_lazy_diffraction2d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.tests.test\_signals.test\_lazy\_electron\_diffraction1d module
+--------------------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_signals.test_lazy_electron_diffraction1d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyxem.tests.test\_signals.test\_lazy\_electron\_diffraction2d module
+--------------------------------------------------------------------
+
+.. automodule:: pyxem.tests.test_signals.test_lazy_electron_diffraction2d
     :members:
     :undoc-members:
     :show-inheritance:
