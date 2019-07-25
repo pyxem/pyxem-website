@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.utils.calibration_utils &#8212; pyXem 0.9.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          pyXem</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for pyxem.utils.calibration_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2017-2019 The pyXem developers</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of pyXem.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with pyXem.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="calc_radius_with_distortion"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.calibration_utils.calc_radius_with_distortion">[docs]</a><span class="k">def</span> <span class="nf">calc_radius_with_distortion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">asym</span><span class="p">,</span> <span class="n">rot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; calculate the distance of each 2D point from the center (xc, yc) &quot;&quot;&quot;</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+    <span class="n">xcp</span> <span class="o">=</span> <span class="n">xc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">-</span> <span class="n">yc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+    <span class="n">ycp</span> <span class="o">=</span> <span class="n">xc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">+</span> <span class="n">yc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xp</span> <span class="o">-</span> <span class="n">xcp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">asym</span> <span class="o">*</span> <span class="p">(</span><span class="n">yp</span> <span class="o">-</span> <span class="n">ycp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="call_ring_pattern"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.calibration_utils.call_ring_pattern">[docs]</a><span class="k">def</span> <span class="nf">call_ring_pattern</span><span class="p">(</span><span class="n">xcenter</span><span class="p">,</span> <span class="n">ycenter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to make a call to the function ring_pattern without passing the</span>
+<span class="sd">    variables directly (necessary for using scipy.optimize.curve_fit).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xcenter : float</span>
+<span class="sd">        The coordinate (fractional pixel units) of the diffraction</span>
+<span class="sd">        pattern center in the first dimension</span>
+<span class="sd">    ycenter : float</span>
+<span class="sd">        The coordinate (fractional pixel units) of the diffraction</span>
+<span class="sd">        pattern center in the second dimension</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ring_pattern : function</span>
+<span class="sd">        A function that calculates a ring pattern given a set of points and</span>
+<span class="sd">        parameters.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">ring_pattern</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">direct_beam_amplitude</span><span class="p">,</span>
+                     <span class="n">asymmetry</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculats a polycrystalline gold diffraction pattern given a set of</span>
+<span class="sd">        pixel coordinates (points). It uses tabulated values of the spacings</span>
+<span class="sd">        (in reciprocal Angstroms) and relative intensities of rings derived from</span>
+<span class="sd">        X-ray scattering factors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        pts : 1D array</span>
+<span class="sd">            One-dimensional array of points (first half as first-dimension</span>
+<span class="sd">            coordinates, second half as second-dimension coordinates)</span>
+<span class="sd">        scale : float</span>
+<span class="sd">            An initial guess for the diffraction calibration</span>
+<span class="sd">            in 1/Angstrom units</span>
+<span class="sd">        amplitude : float</span>
+<span class="sd">            An initial guess for the amplitude of the polycrystalline rings</span>
+<span class="sd">            in arbitrary units</span>
+<span class="sd">        spread : float</span>
+<span class="sd">            An initial guess for the spread within each ring (Gaussian width)</span>
+<span class="sd">        direct_beam_amplitude : float</span>
+<span class="sd">            An initial guess for the background intensity from</span>
+<span class="sd">            the direct beam disc in arbitrary units</span>
+<span class="sd">        asymmetry : float</span>
+<span class="sd">            An initial guess for any elliptical asymmetry in the pattern</span>
+<span class="sd">            (for a perfectly circular pattern asymmetry=1)</span>
+<span class="sd">        rotation : float</span>
+<span class="sd">            An initial guess for the rotation of the (elliptical) pattern</span>
+<span class="sd">            in radians.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ring_pattern : np.array()</span>
+<span class="sd">            A one-dimensional array of the intensities of the ring pattern</span>
+<span class="sd">            at the supplied points.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ring1</span><span class="p">,</span> <span class="n">ring2</span><span class="p">,</span> <span class="n">ring3</span><span class="p">,</span> <span class="n">ring4</span><span class="p">,</span> <span class="n">ring5</span><span class="p">,</span> <span class="n">ring6</span><span class="p">,</span> <span class="n">ring7</span><span class="p">,</span> <span class="n">ring8</span> <span class="o">=</span> <span class="mf">0.4247</span><span class="p">,</span> \
+            <span class="mf">0.4904</span><span class="p">,</span> <span class="mf">0.6935</span><span class="p">,</span> <span class="mf">0.8132</span><span class="p">,</span> <span class="mf">0.8494</span><span class="p">,</span> <span class="mf">0.9808</span><span class="p">,</span> <span class="mf">1.0688</span><span class="p">,</span> <span class="mf">1.0966</span>
+        <span class="n">ring1</span><span class="p">,</span> <span class="n">ring2</span><span class="p">,</span> <span class="n">ring3</span><span class="p">,</span> <span class="n">ring4</span><span class="p">,</span> <span class="n">ring5</span><span class="p">,</span> <span class="n">ring6</span><span class="p">,</span> <span class="n">ring7</span><span class="p">,</span> <span class="n">ring8</span> <span class="o">=</span> <span class="n">ring1</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> \
+            <span class="n">ring2</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">ring3</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">ring4</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">ring5</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> \
+            <span class="n">ring6</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">ring7</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">ring8</span> <span class="o">*</span> <span class="n">scale</span>
+        <span class="n">amp1</span><span class="p">,</span> <span class="n">amp2</span><span class="p">,</span> <span class="n">amp3</span><span class="p">,</span> <span class="n">amp4</span><span class="p">,</span> <span class="n">amp5</span><span class="p">,</span> <span class="n">amp6</span><span class="p">,</span> <span class="n">amp7</span><span class="p">,</span> <span class="n">amp8</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.19</span><span class="p">,</span> \
+            <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.014</span><span class="p">,</span> <span class="mf">0.038</span><span class="p">,</span> <span class="mf">0.036</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[:</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):]</span>
+        <span class="n">Ri</span> <span class="o">=</span> <span class="n">calc_radius_with_distortion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xcenter</span><span class="p">,</span> <span class="n">ycenter</span><span class="p">,</span>
+                                         <span class="n">asymmetry</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+
+        <span class="n">denom</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spread</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">direct_beam_amplitude</span> <span class="o">*</span> <span class="n">Ri</span><span class="o">**-</span><span class="mi">2</span>  <span class="c1"># np.exp((-1*(Ri)*(Ri))/d0)</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">amp1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring1</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">amp2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring2</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v3</span> <span class="o">=</span> <span class="n">amp3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring3</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v4</span> <span class="o">=</span> <span class="n">amp4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring4</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v5</span> <span class="o">=</span> <span class="n">amp5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring5</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v6</span> <span class="o">=</span> <span class="n">amp6</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring6</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring6</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v7</span> <span class="o">=</span> <span class="n">amp7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring7</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring7</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">v8</span> <span class="o">=</span> <span class="n">amp8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring8</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ri</span> <span class="o">-</span> <span class="n">ring8</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">v0</span> <span class="o">+</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span> <span class="o">+</span> <span class="n">v3</span> <span class="o">+</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v5</span> <span class="o">+</span> <span class="n">v6</span> <span class="o">+</span> <span class="n">v7</span> <span class="o">+</span> <span class="n">v8</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ring_pattern</span></div>
+
+
+<div class="viewcode-block" id="generate_ring_pattern"><a class="viewcode-back" href="../../../pyxem.utils.html#pyxem.utils.calibration_utils.generate_ring_pattern">[docs]</a><span class="k">def</span> <span class="nf">generate_ring_pattern</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mask_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                          <span class="n">amplitude</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">spread</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direct_beam_amplitude</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                          <span class="n">asymmetry</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate a set of rings to model a polycrystalline gold diffraction</span>
+<span class="sd">    pattern for use in fitting for diffraction pattern calibration.</span>
+<span class="sd">    It is suggested that the function generate_ring_pattern is used to</span>
+<span class="sd">    find initial values (initial guess) for the parameters used in</span>
+<span class="sd">    the function fit_ring_pattern.</span>
+
+<span class="sd">    This function is written expecting a single 2D diffraction pattern</span>
+<span class="sd">    with equal dimensions (e.g. 256x256).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mask : bool</span>
+<span class="sd">        Choice of whether to use mask or not (mask=True will return a</span>
+<span class="sd">        specified circular mask setting a region around</span>
+<span class="sd">        the direct beam to zero)</span>
+<span class="sd">    mask_radius : int</span>
+<span class="sd">        The radius in pixels for a mask over the direct beam disc</span>
+<span class="sd">        (the direct beam disc within given radius will be excluded</span>
+<span class="sd">        from the fit)</span>
+<span class="sd">    scale : float</span>
+<span class="sd">        An initial guess for the diffraction calibration</span>
+<span class="sd">        in 1/Angstrom units</span>
+<span class="sd">    image_size : int</span>
+<span class="sd">        Size of the diffraction pattern to be generated in pixels.</span>
+<span class="sd">    amplitude : float</span>
+<span class="sd">        An initial guess for the amplitude of the polycrystalline rings</span>
+<span class="sd">        in arbitrary units</span>
+<span class="sd">    spread : float</span>
+<span class="sd">        An initial guess for the spread within each ring (Gaussian width)</span>
+<span class="sd">    direct_beam_amplitude : float</span>
+<span class="sd">        An initial guess for the background intensity from the</span>
+<span class="sd">        direct beam disc in arbitrary units</span>
+<span class="sd">    asymmetry : float</span>
+<span class="sd">        An initial guess for any elliptical asymmetry in the pattern</span>
+<span class="sd">        (for a perfectly circular pattern asymmetry=1)</span>
+<span class="sd">    rotation : float</span>
+<span class="sd">        An initial guess for the rotation of the (elliptical) pattern</span>
+<span class="sd">        in radians.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    image : np.array()</span>
+<span class="sd">        Simulated ring pattern with the same dimensions as self.data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+    <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">xcenter</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">ycenter</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">ring_pattern</span> <span class="o">=</span> <span class="n">call_ring_pattern</span><span class="p">(</span><span class="n">xcenter</span><span class="p">,</span> <span class="n">ycenter</span><span class="p">)</span>
+    <span class="n">generated_pattern</span> <span class="o">=</span> <span class="n">ring_pattern</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span>
+                                     <span class="n">direct_beam_amplitude</span><span class="p">,</span> <span class="n">asymmetry</span><span class="p">,</span>
+                                     <span class="n">rotation</span><span class="p">)</span>
+    <span class="n">generated_pattern</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">generated_pattern</span><span class="p">,</span>
+                                   <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">mask</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">maskROI</span> <span class="o">=</span> <span class="n">calc_radius_with_distortion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="n">image_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">maskROI</span><span class="p">[</span><span class="n">maskROI</span> <span class="o">&gt;</span> <span class="n">mask_radius</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">generated_pattern</span><span class="p">[</span><span class="n">maskROI</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">generated_pattern</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

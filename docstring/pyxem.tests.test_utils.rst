@@ -28,18 +28,18 @@ pyxem.tests.test\_utils.test\_indexation\_utils module
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_utils.test\_peakfinders2D module
---------------------------------------------------
+pyxem.tests.test\_utils.test\_io\_utils module
+----------------------------------------------
 
-.. automodule:: pyxem.tests.test_utils.test_peakfinders2D
+.. automodule:: pyxem.tests.test_utils.test_io_utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyxem.tests.test\_utils.test\_sim\_utils module
------------------------------------------------
+pyxem.tests.test\_utils.test\_peakfinders2D module
+--------------------------------------------------
 
-.. automodule:: pyxem.tests.test_utils.test_sim_utils
+.. automodule:: pyxem.tests.test_utils.test_peakfinders2D
     :members:
     :undoc-members:
     :show-inheritance:

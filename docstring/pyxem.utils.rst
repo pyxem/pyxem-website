@@ -4,14 +4,6 @@ pyxem.utils package
 Submodules
 ----------
 
-pyxem.utils.atomic\_scattering\_params module
----------------------------------------------
-
-.. automodule:: pyxem.utils.atomic_scattering_params
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 pyxem.utils.calibration\_utils module
 -------------------------------------
 
@@ -36,10 +28,10 @@ pyxem.utils.indexation\_utils module
     :undoc-members:
     :show-inheritance:
 
-pyxem.utils.lobato\_scattering\_params module
----------------------------------------------
+pyxem.utils.io\_utils module
+----------------------------
 
-.. automodule:: pyxem.utils.lobato_scattering_params
+.. automodule:: pyxem.utils.io_utils
     :members:
     :undoc-members:
     :show-inheritance:
@@ -64,14 +56,6 @@ pyxem.utils.plot module
 -----------------------
 
 .. automodule:: pyxem.utils.plot
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyxem.utils.scattering\_params module
--------------------------------------
-
-.. automodule:: pyxem.utils.scattering_params
     :members:
     :undoc-members:
     :show-inheritance:

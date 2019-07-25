@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyxem.libraries.calibration_library &#8212; pyXem 0.9.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          pyXem</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for pyxem.libraries.calibration_library</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2017-2019 The pyXem developers</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of pyXem.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># pyXem is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with pyXem.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">hyperspy.misc.utils</span> <span class="k">import</span> <span class="n">stack</span> <span class="k">as</span> <span class="n">stack_method</span>
+
+
+<div class="viewcode-block" id="CalibrationDataLibrary"><a class="viewcode-back" href="../../../pyxem.libraries.html#pyxem.libraries.calibration_library.CalibrationDataLibrary">[docs]</a><span class="k">class</span> <span class="nc">CalibrationDataLibrary</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Maps crystal structure (phase) to diffraction vectors.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    au_x_grating_dp : ElectronDiffraction2D</span>
+<span class="sd">        A ring diffraction pattern obtained from an Au X-grating standard.</span>
+<span class="sd">    au_x_grating_im : :obj:`hyperspy.signals.Signal2D`</span>
+<span class="sd">        An image of an Au X-grating standard.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">au_x_grating_dp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">au_x_grating_im</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">moo3_dp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">moo3_im</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">au_x_grating_dp</span> <span class="o">=</span> <span class="n">au_x_grating_dp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">au_x_grating_im</span> <span class="o">=</span> <span class="n">au_x_grating_im</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moo3_dp</span> <span class="o">=</span> <span class="n">moo3_dp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moo3_im</span> <span class="o">=</span> <span class="n">moo3_im</span>
+
+<div class="viewcode-block" id="CalibrationDataLibrary.plot_calibration_data"><a class="viewcode-back" href="../../../pyxem.libraries.html#pyxem.libraries.calibration_library.CalibrationDataLibrary.plot_calibration_data">[docs]</a>    <span class="k">def</span> <span class="nf">plot_calibration_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_to_plot</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Plot the calibration data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_to_plot : string</span>
+<span class="sd">            Specify the calibration data to be plotted. Valid options are:</span>
+<span class="sd">            {&#39;au_x_grating_dp&#39;, &#39;au_x_grating_im&#39;}</span>
+<span class="sd">        roi : :obj:`hyperspy.roi.BaseInteractiveROI`</span>
+<span class="sd">            An optional ROI object, as detailed in HyperSpy, to be added as a</span>
+<span class="sd">            widget to the calibration data plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Construct object containing user defined data to plot</span>
+        <span class="k">if</span> <span class="n">data_to_plot</span> <span class="o">==</span> <span class="s1">&#39;au_x_grating_dp&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">au_x_grating_dp</span>
+        <span class="k">elif</span> <span class="n">data_to_plot</span> <span class="o">==</span> <span class="s1">&#39;au_x_grating_im&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">au_x_grating_im</span>
+        <span class="k">elif</span> <span class="n">data_to_plot</span> <span class="o">==</span> <span class="s1">&#39;moo3_dp&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moo3_dp</span>
+        <span class="k">elif</span> <span class="n">data_to_plot</span> <span class="o">==</span> <span class="s1">&#39;moo3_im&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moo3_im</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Please specify valid data_to_plot.&quot;</span><span class="p">)</span>
+        <span class="c1"># Plot the data</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">roi</span><span class="p">:</span>
+            <span class="n">roi</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">)</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright Copyright 2017-2019, Python Crystallographic Electron Microscopy.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
