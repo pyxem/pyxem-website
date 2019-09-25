@@ -117,7 +117,7 @@ development team via pyxem.team@gmail.com
 
 Contributions from new developers are strongly encouraged. Many potential contributors
 may be scientists with little or no open-source development experience and we have written
-a `contributing guide <http://pyxem.github.io/pyxem/contributing.html>`_ particularly for
+a `contributing guide <http://pyxem.github.io/pyxem-website/contributing.html>`_ particularly for
 this audience.
 
 
@@ -126,7 +126,7 @@ Related Packages
 
 The following packages are developed by the pyXem team:
 
-- `texpy <http://pyxem.github.io/pyxem/texpy>`__- for quaternion, rotation, and orientation handling in Python.
+- `orix <http://pyxem.github.io/pyxem/orix>`__- for quaternion, rotation, and orientation handling in Python.
 
 
 These packages are central to the scientific functionality of pyXem:
