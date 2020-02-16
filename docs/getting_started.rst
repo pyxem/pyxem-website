@@ -64,6 +64,5 @@ development team via pyxem.team@gmail.com
 
 Contributions from new developers are strongly encouraged. Many potential contributors
 may be scientists with little or no open-source development experience and we have written
-a `contributing guide <http://pyxem.github.io/pyxem-website/contributing.html>`_ particularly for
-this audience.
+a contributing guide, which you can find on the github.
 
