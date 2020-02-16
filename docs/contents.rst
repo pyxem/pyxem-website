@@ -5,6 +5,6 @@ Contents
     :maxdepth: 2
 
     self
-    get_started
+    getting_started
     literature
     conventions
