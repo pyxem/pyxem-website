@@ -9,6 +9,7 @@
     self
     contents
     modules
+    getting_started
     literature
     conventions
 
