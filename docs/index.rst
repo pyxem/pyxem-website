@@ -51,8 +51,8 @@ code development by citing the DOI at the top of this page.
 
 News
 ----
-14/02/2020 - pyxem has a new release (https://github.com/pyxem/pyxem/releases/tag/v0.10.1)
-08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (https://arxiv.org/abs/2001.02716)
+- 14/02/2020 - pyxem has a new release (https://github.com/pyxem/pyxem/releases/tag/v0.10.1)
+- 08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (https://arxiv.org/abs/2001.02716)
 
 Related Packages
 ----------------
