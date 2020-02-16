@@ -55,9 +55,13 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">pyXem - Crystallographic Electron Microscopy in Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents.html">Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#getting-started">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#questions">Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#contributing-and-feature-requests">Contributing and Feature Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="literature.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 </ul>
 </ul>
 </li>
@@ -72,11 +76,7 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">pyXem - Crystallographic Electron Microscopy in Python</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li><a class="reference internal" href="#documentation">Documentation</a></li>
-<li><a class="reference internal" href="#questions">Questions</a></li>
-<li><a class="reference internal" href="#contributing-and-feature-requests">Contributing and Feature Requests</a></li>
+<li><a class="reference internal" href="#news">News</a></li>
 <li><a class="reference internal" href="#related-packages">Related Packages</a></li>
 </ul>
 </li>
@@ -138,62 +138,12 @@ microscopy based on scanning electron diffraction (SED) data.</p>
 <p>pyXem is released under the GPL v3 license.</p>
 <p>If analysis using pyxem forms a part of published work please consider recognizing the
 code development by citing the DOI at the top of this page.</p>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>pyXem requires python 3 and conda - we suggest using the python 3 version of <a class="reference external" href="https://conda.io/miniconda.html">Miniconda</a> and creating a new environment for pyxem using the following commands in the anaconda prompt::</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create -n pyxem
-$ conda activate pyxem
-</pre></div>
-</div>
-<p>The recommended way to install pyXem is then from conda-forge using::</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge pyxem
-</pre></div>
-</div>
-<p>Note that pyxem is also available via pip::</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install pyxem
-</pre></div>
-</div>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>To get started using pyxem, especially if you are unfamiliar with python, we recommend using jupyter notebooks. Having installed pyxem as above, a jupyter notebook can be opened using the following commands entered into an anaconda prompt or terminal::</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate pyxem
-$ jupyter notebook
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/pyxem/pyxem-demos">Tutorials and Example Workflows</a> have been curated as a series of jupyter notebooks that you can work through and modify to perform many common analyses.</p>
-</div>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p>Documentation, in the form of <a class="reference external" href="http://pyxem.github.io/pyxem-website/docstring">Docstrings</a> are available for all pyxem modules at the following links:</p>
+<div class="section" id="news">
+<h2>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="http://pyxem.github.io/pyxem-website/docstring/pyxem.signals">pyxem.signals</a> - for manipulating raw data and analysis results.</p></li>
-<li><p><a class="reference external" href="http://pyxem.github.io/pyxem-website/docstring/pyxem.generators">pyxem.generators</a> - for establishing simulation and analysis conditions.</p></li>
-<li><p><a class="reference external" href="http://pyxem.github.io/pyxem-website/docstring/pyxem.components">pyxem.components</a> - for fitting in model based analyses.</p></li>
-<li><p><a class="reference external" href="http://pyxem.github.io/pyxem-website/docstring/pyxem.libraries">pyxem.libraries</a> - that store simulation results needed for analysis.</p></li>
+<li><p>14/02/2020 - pyxem has a new release (<a class="reference external" href="https://github.com/pyxem/pyxem/releases/tag/v0.10.1">https://github.com/pyxem/pyxem/releases/tag/v0.10.1</a>)</p></li>
+<li><p>08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (<a class="reference external" href="https://arxiv.org/abs/2001.02716">https://arxiv.org/abs/2001.02716</a>)</p></li>
 </ul>
-</div>
-<div class="section" id="questions">
-<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
-<p>If you have a question about pyxem, an issue using the code, or find a bug - we want to know!</p>
-<p>We prefer if you let us know by <a class="reference external" href="https://github.com/pyxem/pyxem/issues">raising an issue</a>
-on our Github page so that we can answer in “public” and potentially help someone else who has
-the same question. You can also e-mail the development team via: <a class="reference external" href="mailto:pyxem&#46;team&#37;&#52;&#48;gmail&#46;com">pyxem<span>&#46;</span>team<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
-</div>
-<div class="section" id="contributing-and-feature-requests">
-<h2>Contributing and Feature Requests<a class="headerlink" href="#contributing-and-feature-requests" title="Permalink to this headline">¶</a></h2>
-<p>Developers are recommended to install pyXem by downloading the <a class="reference external" href="https://github.com/pyxem/pyxem">source code</a> and using the following commands entered into the anaconda promt (or terminal) when located in the pyxem directory::</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge pyxem --only-deps
-$ pip install -e .
-</pre></div>
-</div>
-<p>Feature requests, if pyxem doesn’t do something you want it to, can be made by
-<a class="reference external" href="https://github.com/pyxem/pyxem/issues">raising an issue</a> or e-mailing the
-development team via <a class="reference external" href="mailto:pyxem&#46;team&#37;&#52;&#48;gmail&#46;com">pyxem<span>&#46;</span>team<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
-<p>Contributions from new developers are strongly encouraged. Many potential contributors
-may be scientists with little or no open-source development experience and we have written
-a <a class="reference external" href="http://pyxem.github.io/pyxem-website/contributing.html">contributing guide</a> particularly for
-this audience.</p>
 </div>
 <div class="section" id="related-packages">
 <h2>Related Packages<a class="headerlink" href="#related-packages" title="Permalink to this headline">¶</a></h2>
