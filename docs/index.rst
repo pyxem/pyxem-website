@@ -37,7 +37,8 @@ pyxem packages
 
 The following packages are developed by the pyxem team:
 
-pyxem 
+pyxem - for processing and analysing scanning diffraction data. `Github <http://pyxem.github.io/pyxem/pyxem>`__
+
 
 .. image:: https://travis-ci.org/pyxem/pyxem.svg?branch=master
     :target: https://travis-ci.org/pyxem/pyxem
@@ -54,9 +55,12 @@ pyxem
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2649351.svg
    :target: https://doi.org/10.5281/zenodo.2649351
 
-diffsims
-`orix <http://pyxem.github.io/pyxem/orix>`__- for quaternion, rotation, and orientation handling in Python.
-kikuchipy
+
+diffsims - for creating diffraction simulations. `Github <http://pyxem.github.io/pyxem/diffsims>`__
+
+orix - for quaternion, rotation, and orientation handling in Python. `Github <http://pyxem.github.io/pyxem/orix>`__
+
+kikuchipy - for processing and analysing EBSD data. `Github <http://pyxem.github.io/pyxem/kikuchipy>`__
 
 other important packages
 ------------------------
