@@ -56,6 +56,7 @@ pyxem - for processing and analysing scanning diffraction data. `Github <http://
    :target: https://doi.org/10.5281/zenodo.2649351
 
 
+
 diffsims - for creating diffraction simulations. `Github <http://pyxem.github.io/pyxem/diffsims>`__
 
 orix - for quaternion, rotation, and orientation handling in Python. `Github <http://pyxem.github.io/pyxem/orix>`__
