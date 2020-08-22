@@ -13,8 +13,31 @@
     :align: right
     :target: https://github.com/pyxem/pyxem
 
-pyXem - Crystallographic Electron Microscopy in Python
+pyxem - Crystallographic Electron Microscopy in Python
 ======================================================
+
+
+pyxem is an organisation that develops open-source Python libraries for electron microscopy.
+The packages were originally developed as a platform for hybrid diffraction-imaging
+microscopy based on scanning electron diffraction (SED) data, but they now do a wide range of things! However, the largest package remains the eponyomous one: pyxem - which is focussed on scanning diffraction.
+
+.. figure:: images/sped_scheme.png
+   :align: center
+   :width: 600
+
+News
+----
+-            - welcome kikuchipy 
+- 20/08/2020 - orix v0.4.0 has been released
+- 08/08/2020 - pyxem v0.12.1 has been released
+- 08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (https://arxiv.org/abs/2001.02716)
+
+pyxem packages
+--------------
+
+The following packages are developed by the pyxem team:
+
+- pyxem 
 
 .. image:: https://travis-ci.org/pyxem/pyxem.svg?branch=master
     :target: https://travis-ci.org/pyxem/pyxem
@@ -31,33 +54,13 @@ pyXem - Crystallographic Electron Microscopy in Python
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2649351.svg
    :target: https://doi.org/10.5281/zenodo.2649351
 
-pyXem is an open-source Python library for crystallographic electron microscopy.
-The code is primarily developed as a platform for hybrid diffraction-imaging
-microscopy based on scanning electron diffraction (SED) data.
-
-.. figure:: images/sped_scheme.png
-   :align: center
-   :width: 600
-
-pyXem is released under the GPL v3 license.
-
-If analysis using pyxem forms a part of published work please consider recognizing the
-code development by citing the DOI at the top of this page.
-
-News
-----
-- 14/02/2020 - pyxem has a new release (https://github.com/pyxem/pyxem/releases/tag/v0.10.1)
-- 08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (https://arxiv.org/abs/2001.02716)
-
-Related Packages
-----------------
-
-The following packages are developed by the pyXem team:
-
+- diffsims
 - `orix <http://pyxem.github.io/pyxem/orix>`__- for quaternion, rotation, and orientation handling in Python.
+- kikuchipy
 
-
-These packages are central to the scientific functionality of pyXem:
+other important packages
+------------------------
+These packages are central to the scientific functionality of pyxem:
 
 - `HyperSpy <http://hyperspy.org>`__ for multi-dimensional data handling.
 
@@ -66,4 +69,4 @@ These packages are central to the scientific functionality of pyXem:
 
 .. warning::
 
-    The pyXem project is under continual development and there may be bugs. All methods must be used with care.
+    All parts of the pyxem project are under continual development and there may be bugs. As such please use all methods with care.
