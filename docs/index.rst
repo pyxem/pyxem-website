@@ -7,10 +7,6 @@
     :hidden:
 
     self
-    contents
-    getting_started
-    literature
-    conventions
 
 
 .. figure:: images/forkme_right_orange_ff7600.png
