@@ -27,7 +27,7 @@ microscopy based on scanning electron diffraction (SED) data, but they now do a 
 
 News
 ----
--            - welcome kikuchipy 
+- 24/08/2020 - welcoming kikuchipy to the pyxem family 
 - 20/08/2020 - orix v0.4.0 has been released
 - 08/08/2020 - pyxem v0.12.1 has been released
 - 08/01/2020 - Manuscript describing orix is now avaliable on the arXiv (https://arxiv.org/abs/2001.02716)
@@ -37,7 +37,7 @@ pyxem packages
 
 The following packages are developed by the pyxem team:
 
-- pyxem 
+pyxem 
 
 .. image:: https://travis-ci.org/pyxem/pyxem.svg?branch=master
     :target: https://travis-ci.org/pyxem/pyxem
@@ -54,9 +54,9 @@ The following packages are developed by the pyxem team:
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2649351.svg
    :target: https://doi.org/10.5281/zenodo.2649351
 
-- diffsims
-- `orix <http://pyxem.github.io/pyxem/orix>`__- for quaternion, rotation, and orientation handling in Python.
-- kikuchipy
+diffsims
+`orix <http://pyxem.github.io/pyxem/orix>`__- for quaternion, rotation, and orientation handling in Python.
+kikuchipy
 
 other important packages
 ------------------------
