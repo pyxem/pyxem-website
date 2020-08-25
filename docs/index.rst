@@ -61,7 +61,7 @@ diffsims - for creating diffraction simulations. `Github <http://pyxem.github.io
 
 orix - for quaternion, rotation, and orientation handling in Python. `Github <http://pyxem.github.io/pyxem/orix>`__
 
-kikuchipy - for processing and analysing EBSD data. `Github <http://pyxem.github.io/pyxem/kikuchipy>`__
+kikuchipy - for processing and analysing EBSD data. `Webpage <https://kikuchipy.org>`__
 
 other important packages
 ------------------------
