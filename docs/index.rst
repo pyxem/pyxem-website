@@ -40,7 +40,7 @@ The following packages are developed by the pyxem team:
 
 `pyxem <https://github.com/pyxem/pyxem>`__ - for processing and analysing scanning diffraction data.  
 
-`diffsims <hhttps://github.com/pyxem/diffsims>`__ - for creating diffraction simulations. 
+`diffsims <https://github.com/pyxem/diffsims>`__ - for creating diffraction simulations. 
 
 `orix <https://orix.readthedocs.io/en/stable/>`__ - for quaternion, rotation, and orientation handling in Python. 
 
