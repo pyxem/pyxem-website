@@ -11,7 +11,7 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  github-token: $GITHUB_TOKEN  # Stored on travis as $GITHUB_TOKEN, generated from github by pc494
   keep_history: true
   target_branch: gh-pages
   on: 
