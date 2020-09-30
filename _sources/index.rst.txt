@@ -27,6 +27,7 @@ microscopy based on scanning electron diffraction (SED) data, but they now do a 
 
 News
 ----
+- 16/09/2020 - diffsims v0.3.0 has been released
 - 24/08/2020 - welcoming kikuchipy to the pyxem family 
 - 20/08/2020 - orix v0.4.0 has been released
 - 08/08/2020 - pyxem v0.12.1 has been released
@@ -37,16 +38,9 @@ pyxem packages
 
 The following packages are developed by the pyxem team:
 
-`pyxem <http://pyxem.github.io/pyxem/pyxem>`__ - for processing and analysing scanning diffraction data. 
+`pyxem <https://github.com/pyxem/pyxem>`__ - for processing and analysing scanning diffraction data.  
 
-.. image:: http://img.shields.io/pypi/v/pyxem.svg?style=flat
-    :target: https://pypi.python.org/pypi/pyxem
-
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2649351.svg
-   :target: https://doi.org/10.5281/zenodo.2649351
-
-
-`diffsims <http://pyxem.github.io/pyxem/diffsims>`__ - for creating diffraction simulations. 
+`diffsims <hhttps://github.com/pyxem/diffsims>`__ - for creating diffraction simulations. 
 
 `orix <https://orix.readthedocs.io/en/stable/>`__ - for quaternion, rotation, and orientation handling in Python. 
 
