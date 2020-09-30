@@ -1,4 +1,4 @@
-# The PyXem Website Repo
+# The Pyxem Website Repo
 
 [![Build Status](https://travis-ci.org/pyxem/pyxem-website.svg?branch=master)](https://travis-ci.org/pyxem/pyxem-website)
 

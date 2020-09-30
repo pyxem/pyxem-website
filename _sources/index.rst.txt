@@ -37,17 +37,7 @@ pyxem packages
 
 The following packages are developed by the pyxem team:
 
-pyxem - for processing and analysing scanning diffraction data. `Github <http://pyxem.github.io/pyxem/pyxem>`__
-
-
-.. image:: https://travis-ci.org/pyxem/pyxem.svg?branch=master
-    :target: https://travis-ci.org/pyxem/pyxem
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/pyxem/pyxem?svg=true&branch=master
-    :target: https://ci.appveyor.com/project/dnjohnstone/pyxem/branch/master
-
-.. image:: https://coveralls.io/repos/github/pyxem/pyxem/badge.svg?branch=master
-    :target: https://coveralls.io/github/pyxem/pyxem?branch=master
+`pyxem <http://pyxem.github.io/pyxem/pyxem>`__ - for processing and analysing scanning diffraction data. 
 
 .. image:: http://img.shields.io/pypi/v/pyxem.svg?style=flat
     :target: https://pypi.python.org/pypi/pyxem
@@ -56,12 +46,11 @@ pyxem - for processing and analysing scanning diffraction data. `Github <http://
    :target: https://doi.org/10.5281/zenodo.2649351
 
 
+`diffsims <http://pyxem.github.io/pyxem/diffsims>`__ - for creating diffraction simulations. 
 
-diffsims - for creating diffraction simulations. `Github <http://pyxem.github.io/pyxem/diffsims>`__
+`orix <https://orix.readthedocs.io/en/stable/>`__ - for quaternion, rotation, and orientation handling in Python. 
 
-orix - for quaternion, rotation, and orientation handling in Python. `Github <http://pyxem.github.io/pyxem/orix>`__
-
-kikuchipy - for processing and analysing EBSD data. `Webpage <https://kikuchipy.org>`__
+`kikuchipy <https://kikuchipy.org>`__ - for processing and analysing EBSD data. 
 
 other important packages
 ------------------------
